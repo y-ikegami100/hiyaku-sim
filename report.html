@@ -692,8 +692,7 @@ body{background:#ccc;font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒ�
 <script>
 (function(){
   let d=null;
-  try{const p=new URLSearchParams(location.search).get('d');if(p)d=JSON.parse(decodeURIComponent(p));}catch(e){}
-  if(!d){try{d=JSON.parse(localStorage.getItem('hiyakuSimData'));}catch(e){}}
+  try{d=JSON.parse(localStorage.getItem('hiyakuSimData'));}catch(e){}
   if(!d){document.body.innerHTML='<div style="padding:40px;font-size:18px;font-family:sans-serif">データがありません。シミュレーター画面からレポートを生成してください。</div>';return;}
   const{months,totalRev36,totalGross,totalClOp,totalHyCost,totalHyFee,ltv,hyRoi,new1,new36,goalRev,goalMonth,hyInitial=0,hyMonthly=0,hyFeeRate=0,totalChInit=0,totalChMonthly=0,baseline={}}=d;
   const{bTotalRev=0,bTotalGross=0,bTotalClOp=0,bLastNewCount=0,bMonthlyRevArr=[]}=baseline;

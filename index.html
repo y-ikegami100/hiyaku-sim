@@ -1680,9 +1680,12 @@ function openReport() {
     clFixed:Number(v('cl_fixed')),clVar:v('cl_var'),
   };
   const payload = {...d, ...extra};
-  try { localStorage.setItem('hiyakuSimData', JSON.stringify(payload)); } catch(e){}
-  const encoded = encodeURIComponent(JSON.stringify(payload));
-  window.open('report.html?d=' + encoded, '_blank');
+  try {
+    localStorage.setItem('hiyakuSimData', JSON.stringify(payload));
+    window.open('report.html', '_blank');
+  } catch(e) {
+    alert('データの保存に失敗しました。ブラウザの設定を確認してください。');
+  }
 }
 
 function closePreview() {
