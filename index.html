@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社飛躍 | 3ヶ年 売上成長シミュレーション</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root{
+  --green:#2C913C;--green-d:#1E6B2C;--green-l:#EBF5ED;--green-mid:#C8E6CC;
+  --black:#000;--white:#fff;
+  --gray-50:#F8F8F7;--gray-100:#F0F0EE;--gray-200:#E0E0DC;
+  --gray-400:#888884;--gray-500:#666662;--gray-600:#444440;
+  --border:#E0E0DC;--border-m:#CACAC6;
+  --red:#C0392B;--red-l:#FDECEA;
+  --orange:#C57B00;--orange-l:#FFF3E0;
+  --radius:0px;--radius-lg:0px;
+  --rp-border:#E0E0DC;--rp-text:#1a1a18;--gray-mid:#888884;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-weight:500;font-family:'游ゴシック体','Yu Gothic',YuGothic,'游ゴシック Medium','Yu Gothic Medium','ヒラギノ角ゴ ProN','Hiragino Kaku Gothic ProN',sans-serif;background:var(--gray-50);color:var(--black);min-height:100vh;padding-bottom:5rem;font-size:18px;line-height:1.6;}
+header{background:var(--white);border-bottom:2px solid var(--green);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.hdr-l{display:flex;align-items:center;gap:14px;}.logo-box{display:flex;align-items:center;gap:10px;}
+.hdiv{width:1px;height:22px;background:var(--border-m);}
+.htitle{font-size:14px;color:var(--gray-400);letter-spacing:.08em;}
+.hdr-r{display:flex;align-items:center;gap:8px;}
+.hbadge{font-size:13px;font-weight:700;background:var(--green-l);color:var(--green-d);padding:3px 10px;border-radius:0;border:1px solid var(--green-mid);}
+.pdf-btn{font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:16px;font-weight:600;padding:8px 18px;border-radius:0;border:none;background:var(--green);color:var(--white);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;}
+.pdf-btn:hover{background:var(--green-d);}
+.pdf-btn svg{width:14px;height:14px;}
+.main{max-width:1280px;margin:0 auto;padding:1.5rem 1.25rem;}
+.page-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+.page-title{font-size:28px;font-weight:900;color:var(--black);margin-bottom:4px;}
+.page-title span{color:var(--green);}
+.page-sub{font-size:16px;color:var(--gray-400);}
+.sec{font-size:13px;font-weight:700;color:var(--green-d);text-transform:uppercase;letter-spacing:.12em;margin:2rem 0 .875rem;display:flex;align-items:center;gap:10px;}
+.sec-block{margin:2rem 0 1rem;}
+.sec-band{display:flex;align-items:center;gap:10px;padding:11px 18px;font-size:14px;font-weight:800;letter-spacing:.06em;background:var(--green-d);color:#fff;margin-bottom:1.25rem;}
+.sec-band-1{background:var(--green-d);}
+.sec-band-2{background:var(--green-d);}
+.sec-band-3{background:var(--green-d);}
+.sec-band-num{font-size:16px;font-weight:900;opacity:.6;margin-right:2px;}
+.sec::before{content:'';width:4px;height:14px;background:var(--green);border-radius:0;flex-shrink:0;}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
+.mb15{margin-bottom:1.5rem;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:0;padding:1.25rem;transition:box-shadow .2s;}
+.card:hover{box-shadow:0 2px 12px rgba(0,0,0,.07);}
+.card-title{font-size:13px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.875rem;padding-bottom:.625rem;border-bottom:1px solid var(--border);}
+.card.ch-card{border-top:3px solid var(--green);}
+.card.hiyaku-card{border-top:3px solid var(--black);}
+.card.crm-card{border-top:3px solid var(--gray-400);}
+.mc{background:var(--white);border:1px solid var(--border);border-radius:0;padding:1rem 1.125rem;}
+.mc-label{font-size:13px;color:var(--gray-400);letter-spacing:.06em;margin-bottom:7px;text-transform:uppercase;}
+.mc-val{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:24px;font-weight:500;color:var(--black);line-height:1.1;margin-bottom:5px;}
+.mc-val.neg{color:var(--red);}.mc-val.pos{color:var(--green);}
+.mc-sub{font-size:14px;color:var(--gray-400);}
+.mc.green-mc{border-left:3px solid var(--green);}.mc.black-mc{border-left:3px solid var(--black);}
+.pbg{background:var(--gray-200);border-radius:0;height:4px;margin-top:8px;overflow:hidden;}
+.pb{height:4px;border-radius:0;background:var(--green);transition:width .5s cubic-bezier(.4,0,.2,1);}
+.badge{display:inline-flex;align-items:center;font-size:13px;font-weight:700;padding:3px 9px;border-radius:0;}
+.ok{background:var(--green-l);color:var(--green-d);border:1px solid var(--green-mid);}
+.warn{background:var(--orange-l);color:var(--orange);border:1px solid #FFD9A0;}
+.ng{background:var(--red-l);color:var(--red);border:1px solid #F5C6C2;}
+.phase-tabs{display:flex;gap:0;margin-bottom:1.25rem;border:1px solid var(--border-m);border-radius:0;overflow:hidden;width:fit-content;}
+.phase-tab{font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:14px;font-weight:500;padding:7px 18px;border:none;background:var(--white);cursor:pointer;color:var(--gray-500);transition:all .15s;border-right:1px solid var(--border);}
+.phase-tab:last-child{border-right:none;}
+.phase-tab.active{background:var(--green);color:var(--white);font-weight:700;}
+.phase-label{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:700;padding:2px 8px;border-radius:0;margin-bottom:.75rem;}
+.ph-growth{background:var(--green-l);color:var(--green-d);border:1px solid var(--green-mid);}
+.ph-stable{background:#EEF3FF;color:#2C4B8A;border:1px solid #C5D3F5;}
+.ph-expand{background:#FFF3E0;color:#8A4A00;border:1px solid #FFD9A0;}
+.cn-row{display:flex;align-items:center;gap:6px;margin-bottom:.75rem;padding-bottom:.625rem;border-bottom:1px solid var(--border);flex-wrap:nowrap;}
+.cn-label{font-size:13px;font-weight:700;color:var(--green);background:var(--green-l);padding:2px 7px;border-radius:0;}
+.cn-input{font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:14px;font-weight:700;color:var(--black);border:none;border-bottom:2px solid var(--border);background:transparent;outline:none;width:120px;min-width:80px;padding:2px 4px;transition:border-color .2s;}
+.cn-input:focus{border-bottom-color:var(--green);}
+.fr{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.fl{font-size:13px;color:var(--gray-500);flex:none;line-height:1.3;white-space:nowrap;min-width:90px;}
+.fi-wrap{display:flex;align-items:center;background:var(--gray-50);border:1px solid var(--border-m);border-radius:0;overflow:hidden;transition:border-color .2s;}
+.fi-wrap:focus-within{border-color:var(--green);background:var(--white);}
+.fi{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:14px;font-weight:500;color:var(--black);background:transparent;border:none;outline:none;padding:4px 4px;width:85px;text-align:right;}
+.fi::-webkit-inner-spin-button,.fi::-webkit-outer-spin-button{-webkit-appearance:none;}
+.fu{font-size:14px;color:var(--gray-400);padding:5px 7px 5px 0;white-space:nowrap;}
+.seg{display:inline-flex;background:var(--gray-100);border:1px solid var(--border);border-radius:0;padding:2px;gap:2px;}
+.seg-btn{font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:13px;font-weight:500;padding:4px 10px;border-radius:0;border:none;background:transparent;cursor:pointer;color:var(--gray-500);transition:all .15s;}
+.seg-btn.active{background:var(--green);color:var(--white);font-weight:700;}
+.cs{display:flex;gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border);}
+.cs-kpi{flex:1;text-align:center;background:var(--gray-50);border-radius:0;padding:7px 4px;border:1px solid var(--border);}
+.cs-label{font-size:11px;color:var(--gray-400);margin-bottom:1px;text-transform:uppercase;}
+.cs-val{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:14px;font-weight:500;color:var(--green-d);}
+.sdiv{font-size:13px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.1em;margin:10px 0 8px;padding-top:10px;border-top:1px dashed var(--border);}
+.tab-row{display:flex;gap:0;margin-bottom:1.25rem;border:1px solid var(--border-m);border-radius:0;overflow:hidden;width:fit-content;}
+.tab-btn{font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:14px;font-weight:500;padding:6px 15px;border:none;border-right:1px solid var(--border);background:var(--white);cursor:pointer;color:var(--gray-500);transition:all .15s;}
+.tab-btn:last-child{border-right:none;}
+.tab-btn.active{background:var(--green);color:var(--white);font-weight:700;}
+.year-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem;}
+.yr-card{background:var(--white);border:1px solid var(--border);border-radius:0;padding:1rem 1.25rem;position:relative;overflow:hidden;}
+.yr-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.yr-card.y1::before{background:var(--green);}.yr-card.y2::before{background:#2C4B8A;}.yr-card.y3::before{background:#8A4A00;}
+.yr-label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);margin-bottom:.5rem;}
+.yr-val{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:29px;font-weight:500;color:var(--black);margin-bottom:3px;}
+.yr-sub{font-size:14px;color:var(--gray-400);}
+.yr-kpis{display:flex;gap:.75rem;margin-top:.625rem;padding-top:.625rem;border-top:1px solid var(--border);}
+.yr-kpi{font-size:13px;color:var(--gray-500);}
+.yr-kpi span{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-weight:500;color:var(--black);}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;}
+.li{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--gray-500);}
+.ld{width:10px;height:10px;border-radius:0;flex-shrink:0;}
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;font-size:14px;border-collapse:collapse;}
+thead{position:sticky;top:60px;z-index:10;}
+th{text-align:left;padding:7px 8px;background:var(--gray-50);color:var(--gray-500);font-size:13px;font-weight:700;border-bottom:2px solid var(--border-m);white-space:nowrap;text-transform:uppercase;}
+th:not(:first-child){text-align:right;}
+td{padding:6px 8px;border-bottom:1px solid var(--border);color:var(--gray-600);}
+td:not(:first-child){text-align:right;font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:14px;}
+tbody tr:hover td{background:var(--gray-50);}
+.yr-sep td{background:var(--gray-100)!important;font-weight:700;color:var(--black);border-top:2px solid var(--border-m);}
+.goal-met{color:var(--green);font-weight:700;}.neg-val{color:var(--red);}
+.sale-tag{display:inline-block;font-size:12px;font-weight:700;background:var(--green-l);color:var(--green-d);padding:1px 5px;border-radius:0;margin-left:4px;vertical-align:middle;}
+.note{font-size:14px;color:var(--gray-400);margin-top:12px;line-height:1.8;padding-top:10px;border-top:1px solid var(--border);}
+.ch-row{background:var(--white);border:1px solid var(--border);border-left:3px solid var(--green);margin-bottom:6px;padding:.875rem 1.25rem;width:100%;display:block;box-sizing:border-box;}
+.ch-row:hover{box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.ch-row-inner{display:flex;gap:0;align-items:stretch;}
+.ch-row-left{width:240px;flex-shrink:0;border-right:1px solid var(--border);padding-right:1rem;margin-right:1rem;}
+.ch-row-left .cn-row{flex-wrap:wrap;gap:4px;margin-bottom:6px;padding-bottom:6px;}
+.ch-row-mid{flex:1;min-width:0;}
+.ch-row-mid .fr{margin-bottom:5px;justify-content:flex-start;}
+.ch-kpis{display:flex;gap:5px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border);}
+.ch-kpi-mini{flex:1;background:var(--gray-50);border:1px solid var(--border);padding:3px 6px;text-align:center;}
+.ch-row-right{width:220px;flex-shrink:0;border-left:1px solid var(--border);padding-left:1rem;margin-left:1rem;}
+.owner-toggle{display:flex;gap:0;margin-bottom:8px;border:1px solid var(--border-m);border-radius:0;overflow:hidden;width:fit-content;white-space:nowrap;}
+.owner-btn{font-family:'游ゴシック体','Yu Gothic',YuGothic,sans-serif;font-size:12px;font-weight:700;padding:4px 12px;border:none;cursor:pointer;transition:all .15s;}
+.owner-btn.cl{background:var(--gray-100);color:var(--gray-500);}
+.owner-btn.cl.active{background:#2C4B8A;color:#fff;}
+.owner-btn.hy{background:var(--gray-100);color:var(--gray-500);}
+.owner-btn.hy.active{background:var(--green);color:#fff;}
+.owner-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:2px 7px;border-radius:0;margin-left:8px;}
+.badge-cl{background:#EEF3FF;color:#2C4B8A;border:1px solid #C5D3F5;}
+.badge-hy{background:var(--green-l);color:var(--green-d);border:1px solid var(--green-mid);}
+.ch-owner-cl .card-kpi-area{opacity:0.6;}
+.fi[readonly]{
+  background:var(--gray-100)!important;
+  color:var(--gray-400)!important;
+  cursor:not-allowed;
+}
+.fi-wrap.is-auto{
+  background:var(--gray-100)!important;
+  border-color:var(--border)!important;
+  cursor:not-allowed;
+  position:relative;
+}
+.fi-wrap.is-auto::after{
+  content:'自動';
+  font-size:12px;font-weight:700;
+  color:var(--gray-400);
+  padding:0 6px 0 0;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.auto-label{
+  font-size:12px;font-weight:700;color:var(--gray-400);
+  background:var(--gray-100);border:1px solid var(--border);
+  padding:1px 5px;border-radius:0;white-space:nowrap;
+}
+.hint{font-size:14px;color:var(--gray-400);margin-top:6px;line-height:1.7;background:var(--gray-50);border-radius:0;padding:8px 10px;border:1px solid var(--border);}
+.calc-hint{font-size:14px;color:var(--gray-400);margin-bottom:8px;background:var(--gray-50);border-radius:0;padding:6px 10px;}
+.calc-hint span{font-weight:500;color:var(--green-d);}
+.hidden{display:none!important;}
+.dual-hero{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.hero-panel{border-radius:0;padding:1.5rem 1.75rem;border:1px solid var(--border);}
+.hero-panel.client-panel{background:var(--white);border-top:3px solid var(--green);}
+.hero-panel.hiyaku-panel{background:var(--white);border-top:3px solid var(--black);}
+.hero-panel-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem;padding-bottom:.625rem;border-bottom:1px solid var(--border);color:var(--gray-500);}
+.hero-row{display:flex;gap:1.25rem;flex-wrap:wrap;}
+.hero-item{flex:1;min-width:110px;}
+.hero-label{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-400);margin-bottom:4px;}
+.hero-val{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:28px;font-weight:500;line-height:1;margin-bottom:3px;color:var(--black);}
+.hero-val.pos{color:var(--green);}.hero-val.neg{color:var(--red);}
+.hero-sub{font-size:14px;color:var(--gray-400);}
+.hero-divider{width:1px;background:var(--border);align-self:stretch;}
+@media(max-width:860px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}.grid-4{grid-template-columns:repeat(2,1fr);}
+  .dual-hero{grid-template-columns:1fr;}.year-strip{grid-template-columns:1fr;}
+  header{padding:0 1rem;}.main{padding:1.5rem 1rem;}.fi{width:72px;}
+}
+
+.rp-ch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6mm;margin-bottom:4mm;}
+.rp-ch-block{border:1px solid var(--rp-border);padding:4mm;}
+.rp-ch-head{display:flex;align-items:center;gap:3mm;margin-bottom:3mm;padding-bottom:2mm;border-bottom:1px solid var(--rp-border);}
+.rp-ch-badge{background:var(--green);color:#fff;font-size:9pt;font-weight:800;padding:1px 7px;}
+.rp-ch-name{font-size:10pt;font-weight:700;}
+.rp-phase-tag{font-size:7.5pt;color:#888884;margin-left:auto;background:#f5f5f3;padding:1px 6px;}
+.rp-ch-row{display:flex;align-items:center;gap:2mm;font-size:8pt;padding:1mm 0;border-bottom:1px solid #f5f5f3;}
+.rp-ch-row>span:first-child{flex:1;color:#888884;}
+.rp-arrow{color:#ccc;font-size:7pt;}.rp-val-end{font-weight:700;font-family:monospace;color:#1a1a18;}
+.rp-unit{font-size:7.5pt;color:#aaa;min-width:5mm;}.rp-2col{display:grid;grid-template-columns:repeat(2,1fr);gap:6mm;}
+.rp-cost-block{border:1px solid var(--rp-border);padding:4mm;}
+.rp-cost-title{font-size:8.5pt;font-weight:700;color:var(--green-d);margin-bottom:2mm;padding-bottom:2mm;border-bottom:2px solid var(--green);}
+.rp-cost-row{display:flex;justify-content:space-between;align-items:center;font-size:8pt;padding:1.5mm 0;border-bottom:1px solid #f5f5f3;}
+.rp-cost-val{font-family:monospace;font-weight:600;color:#1a1a18;}
+.rp-cover-footer{display:flex;align-items:center;justify-content:space-between;padding:6mm 18mm;border-top:1px solid rgba(255,255,255,0.2);}
+.rp-cover-logo img{height:20px;filter:brightness(0) invert(1);}
+.rp-cover-tagline{font-size:9pt;color:rgba(255,255,255,0.5);letter-spacing:.1em;}
+.rp-cover-page{display:flex;flex-direction:column;background:var(--black);color:var(--white);min-height:297mm;}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  @page{size:A4 portrait;margin:0;}
+  body>header,.main,#printBtn,#previewBtn,#report-bar{display:none!important;}
+  #report{display:block!important;}
+}
+#report{display:none;}
+.rp{width:210mm;min-height:297mm;page-break-after:always;break-after:page;position:relative;background:#fff;font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;}
+.rp:last-child{page-break-after:avoid;break-after:avoid;}
+.rp-header{background:var(--black);color:var(--white);padding:10mm 14mm 8mm;display:flex;align-items:flex-end;justify-content:space-between;}
+.rp-header-logo img{height:24px;filter:brightness(0) invert(1);}
+.rp-header-meta{text-align:right;}
+.rp-header-title{font-size:13pt;font-weight:700;letter-spacing:.06em;color:rgba(255,255,255,.7);}
+.rp-header-page{font-size:10pt;color:rgba(255,255,255,.45);margin-top:2px;}
+.rp-accent{height:3px;background:var(--green);}
+.rp-body{padding:10mm 14mm 18mm;}
+.rp-footer{position:absolute;bottom:0;left:0;right:0;padding:4mm 14mm;border-top:1px solid #eee;display:flex;align-items:center;justify-content:space-between;font-size:10pt;color:#aaa;}
+.rp-footer-green{width:28px;height:2px;background:var(--green);}
+.rp-cover{display:flex;flex-direction:column;background:var(--black);color:var(--white);min-height:297mm;}
+.rp-cover-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding:20mm 18mm;}
+.rp-cover-eyebrow{font-size:12pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:8mm;display:flex;align-items:center;gap:8px;}
+.rp-cover-eyebrow::before{content:'';width:24px;height:2px;background:var(--green);}
+.rp-cover-title{font-size:34pt;font-weight:900;line-height:1.2;margin-bottom:5mm;color:var(--white);}
+.rp-cover-title span{color:var(--green);}
+.rp-cover-sub{font-size:17pt;color:rgba(255,255,255,.55);margin-bottom:16mm;line-height:1.6;}
+.rp-cover-meta{display:flex;gap:14mm;}
+.rp-cover-meta-item{border-left:2px solid var(--green);padding-left:5mm;}
+.rp-cover-meta-label{font-size:10pt;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2mm;}
+.rp-cover-meta-val{font-size:14pt;font-weight:700;color:var(--white);}
+.rp-cover-footer{padding:8mm 18mm;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;}
+.rp-cover-footer img{height:22px;filter:brightness(0) invert(1);}
+.rp-cover-footer-right{text-align:right;font-size:10pt;color:rgba(255,255,255,.4);}
+.rp-section-title{font-size:26pt;font-weight:900;color:var(--black);margin-bottom:2mm;padding-bottom:3mm;border-bottom:2px solid var(--green);}
+.rp-section-sub{font-size:13pt;color:var(--gray-400);margin-bottom:6mm;}
+.rp-label{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);margin-bottom:1.5mm;}
+.rp-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-bottom:6mm;}
+.rp-kpi-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-bottom:6mm;}
+.rp-kpi{background:#f9f9f8;border:1px solid #e8e8e4;border-radius:0;padding:4mm 5mm;}
+.rp-kpi.accent{background:var(--green);border-color:var(--green);}
+.rp-kpi.accent .rp-label{color:rgba(255,255,255,.7);}
+.rp-kpi.accent .rp-kpi-val{color:var(--white);}
+.rp-kpi-val{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:26pt;font-weight:500;color:var(--black);line-height:1.1;margin-bottom:1mm;}
+.rp-kpi-val.green{color:var(--green);}.rp-kpi-val.red{color:var(--red);}
+.rp-kpi-note{font-size:10pt;color:var(--gray-400);}
+.rp-year-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-bottom:6mm;}
+.rp-year{border-radius:0;padding:5mm 6mm;border:1px solid #ddd;}
+.rp-year.y1{border-top:3px solid var(--green);}.rp-year.y2{border-top:3px solid #2C4B8A;}.rp-year.y3{border-top:3px solid #8A4A00;}
+.rp-year-label{font-size:10pt;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);margin-bottom:2mm;}
+.rp-year-val{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:23pt;font-weight:700;margin-bottom:1mm;}
+.rp-year-sub{font-size:10pt;color:var(--gray-400);margin-bottom:3mm;padding-bottom:3mm;border-bottom:1px solid #eee;}
+.rp-year-kpi-row{display:flex;flex-direction:column;gap:1.5mm;}
+.rp-year-kpi{display:flex;justify-content:space-between;align-items:baseline;}
+.rp-year-kpi-label{font-size:10pt;color:var(--gray-500);}
+.rp-year-kpi-val{font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;font-size:13pt;font-weight:500;color:var(--black);}
+.rp-year-kpi-val.green{color:var(--green);}.rp-year-kpi-val.red{color:var(--red);}
+.rp-chart{margin-bottom:6mm;position:relative;}
+.rp-chart-title{font-size:13pt;font-weight:700;color:var(--black);margin-bottom:3mm;}
+.rp-chart canvas{width:100%!important;}
+.rp-2col{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-bottom:6mm;}
+.rp-table{width:100%;border-collapse:collapse;font-size:10pt;margin-bottom:6mm;}
+.rp-table th{background:var(--black);color:var(--white);padding:2.5mm 3mm;text-align:right;font-size:10pt;font-weight:700;white-space:nowrap;}
+.rp-table th:first-child{text-align:left;}
+.rp-table td{padding:2mm 3mm;border-bottom:1px solid #eee;text-align:right;font-family:'SF Mono','Menlo','Consolas','Courier New',monospace;color:#333;}
+.rp-table td:first-child{text-align:left;font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-weight:500;}
+.rp-table tbody tr:nth-child(even) td{background:#fafafa;}
+.rp-table .yr-sep-row td{background:#f0f0ee!important;font-weight:700;border-top:2px solid #ccc;color:var(--black);}
+.rp-table .goal-met{color:var(--green);font-weight:700;}
+.rp-table .neg{color:var(--red);}.rp-table .pos{color:var(--green);}
+.rp-divider{height:1px;background:#eee;margin:4mm 0;}
+.rp-tag{display:inline-block;font-size:10pt;font-weight:700;padding:1px 5px;border-radius:0;margin-left:3px;}
+.rp-tag.sale{background:var(--green-l);color:var(--green-d);}
+.rp-note{font-size:10pt;color:#999;line-height:1.7;padding-top:3mm;border-top:1px solid #eee;}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-l">
+    <div class="logo-box"><img src="data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAG1pZjFhdmlmbWlhZgAAA1ptZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAARmlsb2MAAAAAREAAAwABAAAAAAN+AAEAAAAAAAAA5QACAAAAAARjAAEAAAAAAAAHmAADAAAAAAv7AAEAAAAAAAAAvgAAAE1paW5mAAAAAAADAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAFWluZmUCAAAAAAIAAGF2MDEAAAAAFWluZmUCAAABAAMAAEV4aWYAAAACZGlwcnAAAAI+aXBjbwAAAAxhdjFDgQAMAAAAAbRjb2xycklDQwAAAahsY21zAhAAAG1udHJSR0IgWFlaIAfcAAEAGQADACkAOWFjc3BBUFBMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD21gABAAAAANMtbGNtcwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACWRlc2MAAADwAAAAX2NwcnQAAAFMAAAADHd0cHQAAAFYAAAAFHJYWVoAAAFsAAAAFGdYWVoAAAGAAAAAFGJYWVoAAAGUAAAAFHJUUkMAAAEMAAAAQGdUUkMAAAEMAAAAQGJUUkMAAAEMAAAAQGRlc2MAAAAAAAAABWMyY2kAAAAAAAAAAAAAAABjdXJ2AAAAAAAAABoAAADLAckDYwWSCGsL9hA/FVEbNCHxKZAyGDuSRgVRd13ta3B6BYmxmnysab9908PpMP//dGV4dAAAAABDQzAAWFlaIAAAAAAAAPbWAAEAAAAA0y1YWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts8AAAAUaXNwZQAAAAAAAAC0AAAAKQAAABBwaXhpAAAAAAMICAgAAAAMYXYxQ4EAHAAAAAAOcGl4aQAAAAABCAAAADhhdXhDAAAAAHVybjptcGVnOm1wZWdCOmNpY3A6c3lzdGVtczphdXhpbGlhcnk6YWxwaGEAAAAAHmlwbWEAAAAAAAAAAgABBIECAwQAAgSFAwaHAAAAKGlyZWYAAAAAAAAADmF1eGwAAgABAAEAAAAOY2RzYwADAAEAAQAACUNtZGF0EgAKCRgdbOhkgIaDQjLVAREgAYYogj5Akl1gt7LVcugp6/a5M6mKizXgjT84Kul35B5ic9G7ur5oRQB2nxY7JX+gDI8JxeK7YYuVpqhLLxdyba/CrOhNFCS/Wv0DfhaKRmySfiyeLkyIt31Nkyms72/+iR/NMHxsUZaOczdQRGeItMG8xsyE5UUpX3n734EwN1IWdwCAi8wHwPdEAvqGh9YSOAdUsSdCb4a+mivf2jt0xB5/uPyehFAro33s6A3tlA6vHgV5OIS5xP2vJdW7+p9PPWgCBgIWzHqiazT/Biq3dIBEFBIACgYYHWzoZVAyiw8RIAAIiNgAbrFvs0Km4JMnM09j+PKKYxCvwh83dvwgaG13ZyKv0dvr3wCuP7Giq5Rk5YJdXd9O9ertO9BEVUwqyJuPMv+Lz//YmiPknz8TZZiHtbYcFMCUzTTUGCweoQc6ynXEy1Y0W0j7/sH9fRVjE9wewmhyLrPnwOcKBMfTrXOFASoAVCT9leDjnbJxzuTzFM/Km5M3GmKJjOgnU+P0Y3sSOfWirnyHUVRd3ID7eg/9HUmQsyAc7BsOu4Kb0GOhr40LZCOJ7jweCBzHPWmG3PRgDHtSwAga2sv6THDoJMIqKbeQm1dY3Ho7RGA9rh0YS8yO/BQmi7wwZ/L5MlzhFGQBeVbwCDN+HKjLAJgxyPjtIXN289pSnG4X/hnS2jgqr70xNebYCKvFexzq9dd4viLASjW/KXNtGfjWSwTaXpmhpImhvGz5G/ocehNwus3N+lVhoRS51dWdGlSlQVmBqd5eF0YnP8uhk4hym9lBUonRFObLvsXVWWxdKtzc/hpjXT/8nB700Uq2CBsc39+ka6KX7/izHKvzsPje2VQJ+m3wloHAFn+LkQRpeF5HhDb3jqs7oAiepPMPfwE0FS6uYK3OZxfAVpJ5WGJ+JUPtm1A65wh4oNYzFvVLsPCwJDXI3/X7xoAXD373Ax/t81wknIKkG/ITI/QroPXQMLqSx/BIXPRqPTNA6w8M3jjLdrtMMRzw4llK2FEdKi+A/kmwyNxRjdVONadK1RL9pbIYXR9xuSl6yajq7dpEsynPBZ0d34sekWAn+nfR02ryV5UOSp/5QK86RM9XuKi1kVFo+RWv9sNh7qnnjGe5tfM0OaxPbmNYPR+OyPGVnD8AqzGHFmPw8ZuhxtyBl2gS1Wm6b43rlqUM1W+BUDmkvhNVKcc4BaQ5BEMtRcDTxT+EZ+4pWx+g5clwjxGK1EQ4zoEH0iLCCxB04YRRxcSFyRVWDnOvqlf6vkxUexjoU1fodlpBdyu7E86yhHH3ThpoD6jk0eNynsiPi/cWpOuPrcejdLe9H+wavV5gc5ywX5q+O0pPe0Rwx6DZvO4SrIQz/UzUzes3g3v//CvzA8kcQuB6Q4f8f4lMgF08of+Ib8cCFaa0wLucZAJhRLmVb2iGKOJd2ggd4Ink3nN6r8und9kSoJp7vn2hyaLeE4WpoIBi6w7e3Ed+81CzBALhObdTWrnl+6NYeCDRJ9HFkLUVBcjur95JAjSxlkU6NffwI0doPe5meUUyNvATJprYCsO2Jo/2PCrq6O108EuMTomP6eusqVYEOIFq+2VrLmRJzvl8sc7WScP519p6rpkp9Wi52HJqUlfIeKwxklL18OrGi42+qm6r6StauoFFctdXKHRGlKP2Emwq24SUzPd4ddM+EZRrVnSLSHT05H32wBBBdwFuj+MsQhe9vsdNgK5b7QiUE8oggpqXGH1eSkQWp8YK7NJ1NRA12+TklklG2ws1rzaSZmA9mwmqo4wq0B/Q1DMjutw2kIOLBxJk9jhvyiiX9O5zdvYGOWDcMu4iDMU23qtamYaRyS3lH+ix3y1IgudhffkvbK7Up5kkpkgzFu3ujBlKONr1jBfJFmWJaYC68lX8kpe635wG81F1k4ni7TQTr7v8igmlztXucHV7UG33Q+mL3hNl26PoSklbgR9mXUERFBL94x0G9GvbY+JMqt+LG7vH2od7/xqQxneZwUVYuaqlkMmIVN1YV5FuabcE1OuJJ/MTU5Biai11D4fEj4JXhfnaF39kg+vsyraZ7K9cIRTnFPjO2VRRO9v5fyZeza8Z+77b5yivE5d940Oixumze2GpThMsKXkGluLDYMJC6YwAa8ei8zec7cszOXSn5bdt2RS63i3Lnuk6UjO8LHyRN+Vl/41CQZBpcrzBTYkcU26DpwmqwXU6v6l+162WCe6UmDzewzELhzW1rS5/hNO4odlptDoiJhml6akBYgX/Ei4Csz/REb2qpR1F5ItsPepZIo8iLY1MoHXAo7ICHOdfurCVL+Tp08XDX6TsiekuRLgs66Bt0Lsss+IrCfr5BT2uq7AX1bIquHzXFzfP5mviRyNiu3bB6JO5HWdw8gzSA1sXjQdRmK2SW6MQ44Pcnu8UxZ1mjKbno60b5ScUWi99vXW2CtLuXOHSLpTgVho9H4qK/IMMQ7To2ex4/LdFiF+goRsfU33bcGQzsLIsf2ruY1I43xyDd851ua2kDgTfLadji7UJt6oSHhKkAgpaQF5689RDFv5GjEnFgp/lhhU6TxJ8erwnk0OhR/qOpN+1W3w3La8ey00/uXtkYU+CHha83ws3SabMq1xfcPWjnrunksnDmX/o1SQqhrCThQlhMmwa0VRlTi7xQfg4iRKLDX+MXPQlsBGZ56CaGygOWXYH9P+f0wuMhI4qOpDTkGvrlNBjrfLW/gQcx0l2Zljli8c0mO9GzJHnC1nKGXB5/lQLSJrQN2yTMk+f3WNnNwphV4l1bthnVECqHdeSy1sIhkSrrdO7we1Sgi+317oD4xtOmpHwdshLvggYFB5bV6F51E3vyUWFNcSH/lh0PPh7tpL7l3R0qkqn7kWjMlq/zAAAAAZFeGlmAABJSSoACAAAAAYAEgEDAAEAAAABAAAAGgEFAAEAAABWAAAAGwEFAAEAAABeAAAAKAEDAAEAAAACAAAAEwIDAAEAAAABAAAAaYcEAAEAAABmAAAAAAAAAC8ZAQDoAwAALxkBAOgDAAAGAACQBwAEAAAAMDIxMAGRBwAEAAAAAQIDAACgBwAEAAAAMDEwMAGgAwABAAAA//8AAAKgBAABAAAAtAAAAAOgBAABAAAAKQAAAAAAAAA=" alt="HIYAKU" style="height:32px;display:block;"></div>
+    <div class="hdiv"></div>
+    <span class="htitle">3ヶ年 売上成長シミュレーター</span>
+  </div>
+  <div class="hdr-r">
+    <span class="hbadge">EC成長支援</span>
+    <button class="pdf-btn" id="previewBtn" onclick="openReport()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      レポートプレビュー
+    </button>
+  </div>
+</header>
+
+<div class="main">
+  <div class="page-header">
+    <h1 class="page-title">3ヶ年 <span>成長シミュレーション</span></h1>
+    <p class="page-sub">飛躍に依頼した場合 vs 自然成長継続の36ヶ月インパクトを試算します。</p>
+  </div>
+
+  <!-- ═══ BLOCK 1: 現状 & 目標設定 ═══ -->
+  <div class="sec-band sec-band-1"><span class="sec-band-num">①</span> 現状 &amp; 目標設定 <span class="owner-badge badge-cl" style="text-transform:none;letter-spacing:0;font-size:11px;margin-left:8px">クライアント確認</span></div>
+  <div class="grid-2 mb15">
+    <div class="card">
+      <div class="card-title">クライアント情報 / 目標</div>
+      <div class="fr"><span class="fl">クライアント社名</span><input type="text" id="client_name" value="○○株式会社" style="font-family:'游ゴシック体','Yu Gothic',YuGothic,sans-serif;font-size:13px;font-weight:500;border:none;border-bottom:2px solid var(--border);background:transparent;outline:none;flex:1;padding:4px;" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"></div>
+      <div class="fr"><span class="fl">目標月商</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2000000" id="g_rev"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">達成目標月</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="36" id="g_month"><span class="fu">ヶ月目</span></div></div>
+      <div class="fr"><span class="fl">現状月商（施策前）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300000" id="g_base_rev"><span class="fu">円</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">飛躍なしシナリオ設定</div>
+      <div class="fr"><span class="fl">自然成長率（月次）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0.8" id="base_growth" step="0.1" style="width:80px"><span class="fu">%/月</span></div></div>
+      <p class="hint" style="margin-bottom:8px">流入数・CVR・AOVが毎月この割合で自然成長すると想定</p>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
+        <button style="font-size:12px;padding:3px 9px;border:1px solid var(--border);background:var(--gray-100);color:var(--gray-500);cursor:pointer" onclick="setGrowthRate('0')" class="growth-btn" data-rate="0">0%固定</button>
+        <button style="font-size:12px;padding:3px 9px;border:1px solid var(--border);background:var(--gray-100);color:var(--gray-500);cursor:pointer" onclick="setGrowthRate('0.5')" class="growth-btn" data-rate="0.5">低 0.5%</button>
+        <button style="font-size:12px;padding:3px 9px;border:1px solid var(--green);background:var(--green);color:#fff;cursor:pointer" onclick="setGrowthRate('0.8')" class="growth-btn" data-rate="0.8">標準 0.8%</button>
+        <button style="font-size:12px;padding:3px 9px;border:1px solid var(--border);background:var(--gray-100);color:var(--gray-500);cursor:pointer" onclick="setGrowthRate('1.5')" class="growth-btn" data-rate="1.5">高 1.5%</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" style="margin-top:0">現状値（クライアントのいま） <span class="owner-badge badge-cl" style="text-transform:none;letter-spacing:0;font-size:11px">クライアント確認</span><span style="font-size:10px;font-weight:400;color:var(--gray-400);text-transform:none;letter-spacing:0;margin-left:8px">「飛躍なし」シナリオの基準値</span></div>
+  <div class="grid-3 mb15">
+    <div class="card" style="border-top:3px solid var(--gray-400)">
+      <div class="card-title">CH1 現状値</div>
+      <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1000" id="base_t1"><span class="fu">人</span></div></div>
+      <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="base_c1" step="0.1"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="base_a1"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">広告費（月）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="base_cost1"><span class="fu">円</span></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gray-400)">
+      <div class="card-title">CH2 現状値</div>
+      <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1000" id="base_t2"><span class="fu">人</span></div></div>
+      <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.5" id="base_c2" step="0.1"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4500" id="base_a2"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">広告費（月）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100000" id="base_cost2"><span class="fu">円</span></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gray-400)">
+      <div class="card-title">CH3 現状値</div>
+      <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="500" id="base_t3"><span class="fu">人</span></div></div>
+      <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="base_c3" step="0.1"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="base_a3"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">広告費（月）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="base_cost3"><span class="fu">円</span></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ BLOCK 2: 飛躍の施策設計 ═══ -->
+<div class="sec-band sec-band-2"><span class="sec-band-num">②</span> 飛躍の施策設計 <span class="owner-badge badge-hy" style="text-transform:none;letter-spacing:0;font-size:11px;margin-left:8px">飛躍が入力</span></div>
+  <div class="sec" style="margin-top:0;font-size:12px">2-1 チャネル別流入設定（フェーズ別）</div>
+  <div style="display:flex;gap:16px;margin-bottom:12px;padding:8px 14px;background:var(--white);border:1px solid var(--border);font-size:12px">
+    <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:9px;height:9px;background:#2C4B8A;display:inline-block"></span><b>クライアント継続</b> = 現状値×自然成長（飛躍なしと共通）</span>
+    <span style="display:inline-flex;align-items:center;gap:5px"><span style="width:9px;height:9px;background:var(--green);display:inline-block"></span><b>飛躍担当</b> = 飛躍が設計・実行。初期費用+月額人件費が発生</span>
+  </div>
+  <div class="phase-tabs">
+    <button class="phase-tab active" onclick="showPhase('p1',this)">成長期 M1–12</button>
+    <button class="phase-tab" onclick="showPhase('p2',this)">安定期 M13–24</button>
+    <button class="phase-tab" onclick="showPhase('p3',this)">拡大期 M25–36</button>
+  </div>
+
+  <!-- Phase 1 -->
+  <div id="phase_p1" class="mb15">
+  <div class="ch-row"><!-- CH1 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH1</span><input class="cn-input" type="text" id="ch_name_1" value="オーガニック" maxlength="20"></div>
+        <span class="owner-badge badge-cl" id="ch1_badge" style="margin-bottom:6px;display:inline-flex">クライアント継続</span>
+        <div class="owner-toggle"><button class="owner-btn cl active" id="ch1_own_cl" onclick="setOwner(1,'cl')">クライアント</button><button class="owner-btn hy" id="ch1_own_hy" onclick="setOwner(1,'hy')">飛躍</button></div>
+        <div class="phase-label ph-growth" style="margin-top:8px">成長期 M1→M12</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1000" id="p1_t1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2000" id="p1_t1_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="p1_c1_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.5" id="p1_c1_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="p1_a1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5500" id="p1_a1_e"><span class="fu">円</span></div></div></div>
+        <div class="ch-kpis">
+          <div class="ch-kpi-mini"><div class="cs-label">1M獲得</div><div class="cs-val" id="cs_p1_n1s">—</div></div>
+          <div class="ch-kpi-mini"><div class="cs-label">12M獲得</div><div class="cs-val" id="cs_p1_n1e">—</div></div>
+          <div class="ch-kpi-mini"><div class="cs-label">CAC</div><div class="cs-val">—</div></div>
+        </div>
+      </div>
+      <div class="ch-row-right" id="ch1_cost_block" style="display:none">
+        <div class="sdiv" style="margin-top:0;padding-top:0;border-top:none">飛躍 担当費用</div>
+        <div class="fr"><span class="fl">初期費用</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100000" id="ch1_init"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">月額人件費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="ch1_monthly"><span class="fu">円/月</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ch-row"><!-- CH2 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH2</span><input class="cn-input" type="text" id="ch_name_2" value="広告（Meta/Google）" maxlength="20"></div>
+        <span class="owner-badge badge-hy" id="ch2_badge" style="margin-bottom:6px;display:inline-flex">飛躍担当</span>
+        <div class="owner-toggle"><button class="owner-btn cl" id="ch2_own_cl" onclick="setOwner(2,'cl')">クライアント</button><button class="owner-btn hy active" id="ch2_own_hy" onclick="setOwner(2,'hy')">飛躍</button></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:8px"><span style="font-size:11px;color:var(--gray-500)">課金タイプ</span><div class="seg"><button class="seg-btn active" id="ch2_manual_btn" onclick="setMode(2,'manual')">手動</button><button class="seg-btn" id="ch2_cpc_btn" onclick="setMode(2,'cpc')">CPC</button><button class="seg-btn" id="ch2_cpm_btn" onclick="setMode(2,'cpm')">CPM</button></div></div>
+      </div>
+      <div class="ch-row-mid">
+        <div id="ch2_manual">
+          <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1000" id="p1_t2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3000" id="p1_t2_e"><span class="fu">人</span></div></div></div>
+          <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100000" id="p1_cost2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300000" id="p1_cost2_e"><span class="fu">円</span></div></div></div>
+        </div>
+        <div id="ch2_cpc" class="hidden">
+          <div class="fr"><span class="fl">CPC（円）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100" id="p1_cpc2"><span class="fu">円</span></div></div>
+          <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="p1_cost2cpc_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="p1_cost2cpc_e"><span class="fu">円</span></div></div></div>
+          <div class="calc-hint">流入数 → <span id="calc2_cpc_s">500人</span> → <span id="calc2_cpc_e">1,500人</span></div>
+        </div>
+        <div id="ch2_cpm" class="hidden">
+          <div class="fr"><span class="fl">CPM（円）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="800" id="p1_cpm2"><span class="fu">円</span></div></div>
+          <div class="fr"><span class="fl">CTR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.0" id="p1_ctr2" step="0.1"><span class="fu">%</span></div></div>
+          <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="p1_cost2cpm_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="p1_cost2cpm_e"><span class="fu">円</span></div></div></div>
+          <div class="calc-hint">流入数 → <span id="calc2_cpm_s">125人</span> → <span id="calc2_cpm_e">375人</span></div>
+        </div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.5" id="p1_c2_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.5" id="p1_c2_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="p1_a2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5500" id="p1_a2_e"><span class="fu">円</span></div></div></div>
+        <div class="ch-kpis">
+          <div class="ch-kpi-mini"><div class="cs-label">1M獲得</div><div class="cs-val" id="cs_p1_n2s">—</div></div>
+          <div class="ch-kpi-mini"><div class="cs-label">12M獲得</div><div class="cs-val" id="cs_p1_n2e">—</div></div>
+          <div class="ch-kpi-mini"><div class="cs-label">1M CAC</div><div class="cs-val" id="cs_p1_cac2">—</div></div>
+        </div>
+      </div>
+      <div class="ch-row-right" id="ch2_cost_block">
+        <div class="sdiv" style="margin-top:0;padding-top:0;border-top:none">飛躍 担当費用</div>
+        <div class="fr"><span class="fl">初期費用</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="ch2_init"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">月額人件費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="80000" id="ch2_monthly"><span class="fu">円/月</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ch-row"><!-- CH3 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH3</span><input class="cn-input" type="text" id="ch_name_3" value="SNS / インフルエンサー" maxlength="20"></div>
+        <span class="owner-badge badge-hy" id="ch3_badge" style="margin-bottom:6px;display:inline-flex">飛躍担当</span>
+        <div class="owner-toggle"><button class="owner-btn cl" id="ch3_own_cl" onclick="setOwner(3,'cl')">クライアント</button><button class="owner-btn hy active" id="ch3_own_hy" onclick="setOwner(3,'hy')">飛躍</button></div>
+        <div class="phase-label ph-growth" style="margin-top:8px">成長期 M1→M12</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="500" id="p1_t3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2000" id="p1_t3_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="p1_cost3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100000" id="p1_cost3_e"><span class="fu">円</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="p1_c3_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.0" id="p1_c3_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="p1_a3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5500" id="p1_a3_e"><span class="fu">円</span></div></div></div>
+        <div class="ch-kpis">
+          <div class="ch-kpi-mini"><div class="cs-label">1M獲得</div><div class="cs-val" id="cs_p1_n3s">—</div></div>
+          <div class="ch-kpi-mini"><div class="cs-label">12M獲得</div><div class="cs-val" id="cs_p1_n3e">—</div></div>
+          <div class="ch-kpi-mini"><div class="cs-label">1M CAC</div><div class="cs-val" id="cs_p1_cac3">—</div></div>
+        </div>
+      </div>
+      <div class="ch-row-right" id="ch3_cost_block">
+        <div class="sdiv" style="margin-top:0;padding-top:0;border-top:none">飛躍 担当費用</div>
+        <div class="fr"><span class="fl">初期費用</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100000" id="ch3_init"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">月額人件費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="ch3_monthly"><span class="fu">円/月</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ch-row" style="border-left-color:var(--gray-400)"><!-- CH4 CRM -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label" style="background:var(--gray-400);color:#fff">CH4</span><input class="cn-input" type="text" id="ch_name_4" value="CRM（LINE / メルマガ）" maxlength="24"></div>
+        <span class="owner-badge badge-hy" id="ch4_badge" style="margin-bottom:6px;display:inline-flex">飛躍担当</span>
+        <div class="owner-toggle"><button class="owner-btn cl" id="ch4_own_cl" onclick="setOwner(4,'cl')">クライアント</button><button class="owner-btn hy active" id="ch4_own_hy" onclick="setOwner(4,'hy')">飛躍</button></div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">フォロワー数（現在）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1000" id="crm_followers"><span class="fu">人</span></div></div>
+        <div class="fr"><span class="fl">月間新規登録率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.0" id="crm_reg" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">CTR / CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5.0" id="crm_ctr" step="0.1"><span class="fu">%</span></div><span style="color:var(--gray-400)">/</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.0" id="crm_cvr" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV / 配信回数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="crm_aov"><span class="fu">円</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4" id="crm_freq"><span class="fu">回/月</span></div></div></div>
+        <div class="ch-kpis">
+          <div class="ch-kpi-mini"><div class="cs-label">現在のリスト</div><div class="cs-val" id="crm_list_now">—</div></div>
+          <div class="ch-kpi-mini"><div class="cs-label">36ヶ月後</div><div class="cs-val" id="crm_list_36m">—</div></div>
+        </div>
+      </div>
+      <div class="ch-row-right" id="ch4_cost_block">
+        <div class="sdiv" style="margin-top:0;padding-top:0;border-top:none">飛躍 担当費用</div>
+        <div class="fr"><span class="fl">ツール月額</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="crm_cost"><span class="fu">円/月</span></div></div>
+        <div class="fr"><span class="fl">初期設定費用</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="80000" id="ch4_init"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">月額人件費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="30000" id="ch4_monthly"><span class="fu">円/月</span></div></div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div id="phase_p2" class="hidden mb15">
+  <div class="ch-row"><!-- CH1 P2 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH1</span><span style="font-size:12px;font-weight:600" id="ph2_ch1_name">オーガニック</span></div>
+        <div class="phase-label ph-stable">安定期 M13→M24</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2000" id="p2_t1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4000" id="p2_t1_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="1.5" id="p2_c1_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.0" id="p2_c1_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="5500" id="p2_a1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6000" id="p2_a1_e"><span class="fu">円</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ch-row"><!-- CH2 P2 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH2</span><span style="font-size:12px;font-weight:600" id="ph2_ch2_name">広告</span></div>
+        <div class="phase-label ph-stable">安定期 M13→M24</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="3000" id="p2_t2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6000" id="p2_t2_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="300000" id="p2_cost2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="500000" id="p2_cost2_e"><span class="fu">円</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.5" id="p2_c2_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.0" id="p2_c2_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="5500" id="p2_a2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6000" id="p2_a2_e"><span class="fu">円</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ch-row"><!-- CH3 P2 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH3</span><span style="font-size:12px;font-weight:600" id="ph2_ch3_name">SNS</span></div>
+        <div class="phase-label ph-stable">安定期 M13→M24</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2000" id="p2_t3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4000" id="p2_t3_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="100000" id="p2_cost3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="200000" id="p2_cost3_e"><span class="fu">円</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.0" id="p2_c3_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.5" id="p2_c3_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="5500" id="p2_a3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6000" id="p2_a3_e"><span class="fu">円</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ch-row" style="border-left-color:var(--gray-400)"><!-- CH4 CRM P2 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label" style="background:var(--gray-400);color:#fff">CH4</span><span style="font-size:12px;font-weight:600">CRM（LINE / メルマガ）</span></div>
+        <div class="phase-label ph-stable">安定期 M13→M24</div>
+        <p class="hint" style="font-size:11px;margin-top:6px">フォロワーは自動積み上げ。目標指標のみ設定。</p>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">目標 CTR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6.0" id="p2_crm_ctr" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">目標 CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.5" id="p2_crm_cvr" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">目標 AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5500" id="p2_crm_aov"><span class="fu">円</span></div></div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<!-- Phase 3 -->
+  <div id="phase_p3" class="hidden mb15">
+  <div class="ch-row"><!-- CH1 P3 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH1</span><span style="font-size:12px;font-weight:600" id="ph3_ch1_name">オーガニック</span></div>
+        <div class="phase-label ph-expand">拡大期 M25→M36</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="4000" id="p3_t1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="8000" id="p3_t1_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.0" id="p3_c1_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.5" id="p3_c1_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="6000" id="p3_a1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="7000" id="p3_a1_e"><span class="fu">円</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ch-row"><!-- CH2 P3 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH2</span><span style="font-size:12px;font-weight:600" id="ph3_ch2_name">広告</span></div>
+        <div class="phase-label ph-expand">拡大期 M25→M36</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="6000" id="p3_t2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="12000" id="p3_t2_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="500000" id="p3_cost2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1000000" id="p3_cost2_e"><span class="fu">円</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="3.0" id="p3_c2_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.5" id="p3_c2_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="6000" id="p3_a2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="7000" id="p3_a2_e"><span class="fu">円</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ch-row"><!-- CH3 P3 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label">CH3</span><span style="font-size:12px;font-weight:600" id="ph3_ch3_name">SNS</span></div>
+        <div class="phase-label ph-expand">拡大期 M25→M36</div>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">月間流入数</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="4000" id="p3_t3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="8000" id="p3_t3_e"><span class="fu">人</span></div></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="200000" id="p3_cost3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="400000" id="p3_cost3_e"><span class="fu">円</span></div></div></div>
+        <div class="fr"><span class="fl">CVR</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.5" id="p3_c3_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.0" id="p3_c3_e" step="0.1"><span class="fu">%</span></div></div></div>
+        <div class="fr"><span class="fl">AOV</span><div style="display:flex;align-items:center;gap:4px"><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="6000" id="p3_a3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="7000" id="p3_a3_e"><span class="fu">円</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="ch-row" style="border-left-color:var(--gray-400)"><!-- CH4 CRM P3 -->
+    <div class="ch-row-inner">
+      <div class="ch-row-left">
+        <div class="cn-row"><span class="cn-label" style="background:var(--gray-400);color:#fff">CH4</span><span style="font-size:12px;font-weight:600">CRM（LINE / メルマガ）</span></div>
+        <div class="phase-label ph-expand">拡大期 M25→M36</div>
+        <p class="hint" style="font-size:11px;margin-top:6px">フォロワーは自動積み上げ。目標指標のみ設定。</p>
+      </div>
+      <div class="ch-row-mid">
+        <div class="fr"><span class="fl">目標 CTR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="7.0" id="p3_crm_ctr" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">目標 CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4.0" id="p3_crm_cvr" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">目標 AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6000" id="p3_crm_aov"><span class="fu">円</span></div></div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="sec">2-2 リピート設計 <span class="owner-badge badge-hy" style="text-transform:none;letter-spacing:0;font-size:11px">飛躍が設計</span></div>
+  <div class="grid-3 mb15">
+    <div class="card">
+      <div class="card-title">F2 / F3 転換</div>
+      <div class="fr"><span class="fl">F2転換率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="25" id="s_f2"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">F2購入時 割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="s_df2"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">F3転換率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="15" id="s_f3"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">再購入サイクル</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="60" id="s_cycle"><span class="fu">日</span></div></div>
+      <div class="sdiv">初回割引</div>
+      <div class="fr"><span class="fl">初回購入 割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="s_dfirst"><span class="fu">%</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">月次リピート率</div>
+      <div class="fr"><span class="fl">月次リピート率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="10" id="s_repeat"><span class="fu">%</span></div></div>
+      <p class="hint">既存顧客プール全体から毎月この割合が再購入。F2/F3転換とは独立。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">サブスク設定</div>
+      <div class="fr"><span class="fl">サブスク転換率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="30" id="s_sub"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">サブスク割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="10" id="s_subdisc"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">月次解約率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5" id="s_churn"><span class="fu">%</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">2-3 セール・原価設定 <span class="owner-badge badge-hy" style="text-transform:none;letter-spacing:0;font-size:11px">飛躍が提案</span><span class="owner-badge badge-cl" style="text-transform:none;letter-spacing:0;font-size:11px;margin-left:4px">クライアント確認</span></div>
+  <div class="grid-2 mb15">
+    <div class="card">
+      <div class="card-title">定期セール</div>
+      <div class="fr"><span class="fl">セール割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="15" id="s_sale_disc"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">年間セール回数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4" id="s_sale_n"><span class="fu">回/年</span></div></div>
+      <p class="hint">セール月は全購入者のAOVに一律適用。均等間隔で自動配置。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">原価設定</div>
+      <div class="fr"><span class="fl">原価率（仕入れ）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="30" id="s_cogs"><span class="fu">%</span></div></div>
+      <p class="hint">粗利 = 売上 × (1 − 原価率)</p>
+    </div>
+  </div>
+
+  <div class="sec">2-4 販管費 — クライアント側 <span class="owner-badge badge-cl" style="text-transform:none;letter-spacing:0;font-size:11px">クライアント確認</span></div>
+  <div class="grid-2 mb15">
+    <div class="card">
+      <div class="card-title">固定販管費（月額）</div>
+      <div class="fr"><span class="fl">人件費・家賃 等</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300000" id="cl_opex_fixed"><span class="fu">円/月</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">変動販管費（売上連動）</div>
+      <div class="fr"><span class="fl">物流・梱包 等</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5" id="cl_opex_var" step="0.1"><span class="fu">%</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">2-5 HIYAKU費用（コンサル基本） <span class="owner-badge badge-hy" style="text-transform:none;letter-spacing:0;font-size:11px">飛躍が提示</span></div>
+  <div class="grid-3 mb15">
+    <div class="card hiyaku-card">
+      <div class="card-title">初期費用</div>
+      <div class="fr"><span class="fl">セットアップ費用</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300000" id="hy_initial"><span class="fu">円</span></div></div>
+      <p class="hint">1ヶ月目のみ計上。</p>
+    </div>
+    <div class="card hiyaku-card">
+      <div class="card-title">月額固定費</div>
+      <div class="fr"><span class="fl">月額運用費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="hy_monthly"><span class="fu">円/月</span></div></div>
+    </div>
+    <div class="card hiyaku-card">
+      <div class="card-title">成果報酬 FEE</div>
+      <div class="fr"><span class="fl">月商に対する報酬率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="15" id="hy_fee_rate" step="0.1"><span class="fu">%</span></div></div>
+      <p class="hint">月商 × 報酬率。0%なら成果報酬なし。</p>
+    </div>
+  </div>
+
+  <div class="sec-band sec-band-3"><span class="sec-band-num">③</span> シミュレーション結果</div>
+  <div class="sec" style="margin-top:0;font-size:12px">年次サマリー</div>
+  <div class="year-strip mb15">
+    <div class="yr-card y1"><div class="yr-label">Year 1（M1–12）成長期</div><div class="yr-val" id="y1_rev">—</div><div class="yr-sub">年間売上合計</div><div class="yr-kpis"><div class="yr-kpi">粗利 <span id="y1_gross">—</span></div><div class="yr-kpi">CL営業利益 <span id="y1_op">—</span></div><div class="yr-kpi">実質利益 <span id="y1_real">—</span></div></div></div>
+    <div class="yr-card y2"><div class="yr-label">Year 2（M13–24）安定期</div><div class="yr-val" id="y2_rev">—</div><div class="yr-sub">年間売上合計</div><div class="yr-kpis"><div class="yr-kpi">粗利 <span id="y2_gross">—</span></div><div class="yr-kpi">CL営業利益 <span id="y2_op">—</span></div><div class="yr-kpi">実質利益 <span id="y2_real">—</span></div></div></div>
+    <div class="yr-card y3"><div class="yr-label">Year 3（M25–36）拡大期</div><div class="yr-val" id="y3_rev">—</div><div class="yr-sub">年間売上合計</div><div class="yr-kpis"><div class="yr-kpi">粗利 <span id="y3_gross">—</span></div><div class="yr-kpi">CL営業利益 <span id="y3_op">—</span></div><div class="yr-kpi">実質利益 <span id="y3_real">—</span></div></div></div>
+  </div>
+
+
+  <div class="sec">KPIサマリー（36ヶ月累計）</div>
+  <!-- 飛躍なし vs あり 比較パネル -->
+  <div class="card mb15" style="border-top:3px solid var(--black)">
+    <div class="card-title">飛躍なし vs 飛躍あり — 36ヶ月 比較</div>
+    <div style="overflow-x:auto">
+      <table style="font-size:13px">
+        <thead><tr>
+          <th style="width:200px">指標</th>
+          <th style="text-align:right;color:var(--gray-400)">飛躍なし</th>
+          <th style="text-align:right;color:var(--green-d)">飛躍あり</th>
+          <th style="text-align:right;color:var(--black)">差分</th>
+          <th style="text-align:right;color:var(--black)">増加率</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>36M 累計売上</td><td style="text-align:right;font-family:monospace" id="cmp_rev_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_rev_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_rev_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_rev_pct">—</td></tr>
+          <tr><td>36M 累計粗利</td><td style="text-align:right;font-family:monospace" id="cmp_gross_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_gross_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_gross_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_gross_pct">—</td></tr>
+          <tr><td>36M 累計営業利益</td><td style="text-align:right;font-family:monospace" id="cmp_op_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_op_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_op_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_op_pct">—</td></tr>
+          <tr><td>HIYAKU 投資対効果（ROI）</td>
+          <td style="text-align:right;font-family:monospace">—</td>
+          <td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_roi_with">—</td>
+          <td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_roi_val">—</td>
+          <td style="text-align:right;font-family:monospace" id="cmp_roi_note">粗利増分÷HIYAKU費用</td>
+        </tr>
+        <tr><td>月間新規顧客数（最終月）</td><td style="text-align:right;font-family:monospace" id="cmp_cust_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_cust_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_cust_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_cust_pct">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="dual-hero mb15">
+    <div class="hero-panel client-panel">
+      <div class="hero-panel-title">クライアント損益（HIYAKU費用控除前）</div>
+      <div class="hero-row">
+        <div class="hero-item"><div class="hero-label">目標月の月商</div><div class="hero-val" id="m_rev">—</div><div class="hero-sub" id="m_rev_goal"></div><div class="pbg"><div class="pb" id="pb_rev" style="width:0%"></div></div><div style="margin-top:7px" id="m_rev_badge"></div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">36M 累計粗利</div><div class="hero-val" id="m_gross">—</div><div class="hero-sub">売上 − 原価</div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">36M 累計営業利益</div><div class="hero-val" id="m_op">—</div><div class="hero-sub">粗利 − 広告 − 販管 − CRM</div></div>
+      </div>
+    </div>
+    <div class="hero-panel hiyaku-panel">
+      <div class="hero-panel-title">飛躍 業務委託費 / 実質利益</div>
+      <div class="hero-row">
+        <div class="hero-item"><div class="hero-label">HIYAKU費用（36M合計）</div><div class="hero-val" id="hy_total_cost">—</div><div class="hero-sub">初期 + 月額固定 + 成果報酬</div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">実質営業利益（36M）</div><div class="hero-val" id="m_real_op">—</div><div class="hero-sub">CL営業利益 − HIYAKU費用</div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">HIYAKU 投資対効果</div><div class="hero-val" id="hy_roi">—</div><div class="hero-sub">粗利増分（施策前比）÷ HIYAKU費用</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-4 mb15">
+    <div class="mc green-mc"><div class="mc-label">新規獲得 M1→M36</div><div class="mc-val" id="m_new">—</div><div class="mc-sub">全チャネル合算</div></div>
+    <div class="mc green-mc"><div class="mc-label">推定LTV（36ヶ月）</div><div class="mc-val" id="m_ltv">—</div><div class="mc-sub" id="m_ltv_sub">—</div></div>
+    <div class="mc black-mc"><div class="mc-label">サブスク顧客数（36M後）</div><div class="mc-val" id="m_subpool">—</div><div class="mc-sub">解約考慮済み</div></div>
+    <div class="mc black-mc"><div class="mc-label">成果報酬累計</div><div class="mc-val" id="hy_fee_total">—</div><div class="mc-sub">月商×報酬率の累計</div></div>
+  </div>
+
+  <!-- ★ インパクトサマリー（数字のみ） -->
+  <div class="card mb15" style="border-top:4px solid var(--green);padding:1.25rem 1.5rem">
+    <div style="font-size:11px;font-weight:700;color:var(--green-d);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.875rem">飛躍に依頼した場合 vs 依頼しなかった場合 — 36ヶ月インパクト</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+      <div style="text-align:center;padding:.75rem;background:var(--green-l);border:1px solid var(--green-mid)">
+        <div style="font-size:11px;color:var(--green-d);margin-bottom:4px;font-weight:600">36M 売上差分</div>
+        <div style="font-size:24px;font-weight:900;color:var(--green-d);font-family:monospace;line-height:1.1" id="impact_rev_diff">—</div>
+      </div>
+      <div style="text-align:center;padding:.75rem;background:var(--green-l);border:1px solid var(--green-mid)">
+        <div style="font-size:11px;color:var(--green-d);margin-bottom:4px;font-weight:600">36M 粗利差分</div>
+        <div style="font-size:24px;font-weight:900;color:var(--green-d);font-family:monospace;line-height:1.1" id="impact_gross_diff">—</div>
+      </div>
+      <div style="text-align:center;padding:.75rem;background:var(--green-l);border:1px solid var(--green-mid)">
+        <div style="font-size:11px;color:var(--green-d);margin-bottom:4px;font-weight:600">HIYAKU ROI</div>
+        <div style="font-size:24px;font-weight:900;color:var(--green-d);font-family:monospace;line-height:1.1" id="impact_roi">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">グラフ（36ヶ月）</div>
+
+  <!-- 飛躍なし vs あり 比較 -->
+  <div class="sec" style="margin-top:0;font-size:12px;border-left:3px solid var(--green);padding-left:8px">飛躍なし vs 飛躍あり — 月商推移</div>
+  <div class="card mb15">
+    <div class="legend">
+      <span class="li"><span class="ld" style="background:var(--gray-400)"></span>飛躍なし（自然成長）</span>
+      <span class="li"><span class="ld" style="background:var(--green)"></span>飛躍あり</span>
+    </div>
+    <div style="position:relative;width:100%;height:300px"><canvas id="chartCompare"></canvas></div>
+  </div>
+
+  <!-- 月商・損益 -->
+  <div class="sec" style="margin-top:0;font-size:12px;border-left:3px solid var(--green);padding-left:8px">月商・損益<span style="font-size:11px;font-weight:400;color:var(--gray-400);margin-left:8px;text-transform:none;letter-spacing:0">月商・粗利・実質利益の36ヶ月推移</span></div>
+  <div class="card mb15">
+    <div style="display:flex;flex-wrap:wrap;margin-bottom:8px"><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#2C913C;display:inline-block;flex-shrink:0"></span>月商</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:rgba(44,145,60,0.4);display:inline-block;flex-shrink:0"></span>粗利</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#888884;display:inline-block;flex-shrink:0"></span>CL営業利益</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:rgba(220,100,80,0.6);display:inline-block;flex-shrink:0"></span>実質利益</span></div><div style="position:relative;width:100%;height:300px"><canvas id="chartRevenue"></canvas></div>
+  </div>
+
+  <!-- 顧客構成 -->
+  <div class="sec" style="margin-top:0;font-size:12px;border-left:3px solid var(--green);padding-left:8px">顧客構成<span style="font-size:11px;font-weight:400;color:var(--gray-400);margin-left:8px;text-transform:none;letter-spacing:0">新規・F2/F3・リピート・CRMの月次内訳</span></div>
+  <div class="card mb15">
+    <div style="display:flex;flex-wrap:wrap;margin-bottom:8px"><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#2C913C;display:inline-block;flex-shrink:0"></span>新規</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#1E6B2C;display:inline-block;flex-shrink:0"></span>F2/F3</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#888884;display:inline-block;flex-shrink:0"></span>月次RP</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#CACAC6;display:inline-block;flex-shrink:0"></span>サブスク</span></div><div style="position:relative;width:100%;height:300px"><canvas id="chartCohort"></canvas></div>
+  </div>
+
+  <!-- コスト内訳 -->
+  <div class="sec" style="margin-top:0;font-size:12px;border-left:3px solid var(--green);padding-left:8px">コスト内訳<span style="font-size:11px;font-weight:400;color:var(--gray-400);margin-left:8px;text-transform:none;letter-spacing:0">広告費・CL販管費・HIYAKU費用の月次推移</span></div>
+  <div class="card mb15">
+    <div style="display:flex;flex-wrap:wrap;margin-bottom:8px"><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#2C913C;display:inline-block;flex-shrink:0"></span>広告費</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#888884;display:inline-block;flex-shrink:0"></span>CL販管費</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#CACAC6;display:inline-block;flex-shrink:0"></span>HIYAKU費用</span></div><div style="position:relative;width:100%;height:300px"><canvas id="chartCost"></canvas></div>
+  </div>
+
+  <!-- 年次比較 -->
+  <div class="sec" style="margin-top:0;font-size:12px;border-left:3px solid var(--green);padding-left:8px">年次比較<span style="font-size:11px;font-weight:400;color:var(--gray-400);margin-left:8px;text-transform:none;letter-spacing:0">Year1（成長期）/ Year2（安定期）/ Year3（拡大期）の売上・粗利・営業利益・実質利益</span></div>
+  <div class="card mb15">
+    <div style="display:flex;flex-wrap:wrap;margin-bottom:8px"><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#2C913C;display:inline-block;flex-shrink:0"></span>年間売上</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:rgba(44,145,60,0.4);display:inline-block;flex-shrink:0"></span>粗利</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:#CACAC6;display:inline-block;flex-shrink:0"></span>CL営業利益</span><span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;color:var(--gray-500)"><span style="width:12px;height:12px;background:rgba(220,100,80,0.5);display:inline-block;flex-shrink:0"></span>実質利益</span></div><div style="position:relative;width:100%;height:300px"><canvas id="chartAnnual"></canvas></div>
+  </div>
+
+  <div class="sec">月次詳細（36ヶ月）</div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>月</th><th>新規</th><th>月商</th><th>広告費</th><th>粗利</th><th>CL販管費</th><th>CL営業利益</th><th>HY費用</th><th>実質利益</th></tr></thead>
+        <tbody id="tbl_body"></tbody>
+      </table>
+    </div>
+    <p class="note">※ CL販管費=固定費+変動費(売上×変動率)。HY費用=HIYAKU初期費用(M1のみ)+月額固定+成果報酬。実質利益=CL営業利益−CRM費−HY費用。</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+Chart.defaults.color='#666662';
+Chart.defaults.font.family="'游ゴシック体','Yu Gothic',YuGothic,sans-serif";
+Chart.defaults.font.size=11;
+
+const modes={2:'manual'};
+let cRev=null,cCoh=null,cCost=null,cAnn=null;
+
+function v(id){const el=document.getElementById(id);return el?+(el.value)||0:0;}
+function lerp(s,e,t){return s+(e-s)*t;} // t: 0..1
+
+function fmtY(n){
+  n=Math.round(n);
+  const sign=n<0?'−':'';
+  const abs=Math.abs(n);
+  if(abs>=100000000) return sign+'¥'+(abs/1000000).toFixed(1)+'M';
+  if(abs>=1000000)   return sign+'¥'+(abs/1000000).toFixed(1)+'M';
+  if(abs>=10000)     return sign+'¥'+(abs/10000).toFixed(1)+'万';
+  return sign+'¥'+abs.toLocaleString();
+}
+function fmtYF(n){n=Math.round(n);return(n<0?'−':'')+'¥'+Math.abs(n).toLocaleString();}
+
+// Phase: p=1(M1-12),p=2(M13-24),p=3(M25-36); local t 0..1
+function getChM(ch,m){
+  // クライアント担当CHは現状値×自然成長を使う
+  if(typeof chOwner!=='undefined' && chOwner[ch]==='cl'){
+    const bgr = v('base_growth')/100;
+    const gf = Math.pow(1+bgr, m-1);
+    const t0 = v('base_t'+ch), c0 = v('base_c'+ch)/100, a0 = v('base_a'+ch), cost0 = v('base_cost'+ch);
+    return {
+      traffic: t0*gf,
+      cvr: Math.min(c0*gf, 0.3),
+      aov: a0*gf,
+      adcost: cost0*gf
+    };
+  }
+
+  // 飛躍担当：フェーズ別KPIをそのまま使う（既存ロジック）
+  let p,t;
+  if(m<=12){p=1;t=(m-1)/11;}
+  else if(m<=24){p=2;t=(m-13)/11;}
+  else{p=3;t=(m-25)/11;}
+
+  if(ch===1){
+    return{
+      traffic:lerp(v(`p${p}_t1_s`),v(`p${p}_t1_e`),t),
+      cvr:lerp(v(`p${p}_c1_s`),v(`p${p}_c1_e`),t)/100,
+      aov:lerp(v(`p${p}_a1_s`),v(`p${p}_a1_e`),t),
+      adcost:0
+    };
+  }
+  if(ch===2){
+    const mode=modes[2];
+    let traffic=0,adcost=0;
+    if(mode==='manual'){
+      traffic=lerp(v(`p${p}_t2_s`),v(`p${p}_t2_e`),t);
+      adcost=lerp(v(`p${p}_cost2_s`),v(`p${p}_cost2_e`),t);
+    }else if(mode==='cpc'){
+      adcost=lerp(v(`p${p}_cost2cpc_s`),v(`p${p}_cost2cpc_e`),t);
+      const cpc=v('p1_cpc2');traffic=cpc>0?adcost/cpc:0;
+    }else{
+      adcost=lerp(v(`p${p}_cost2cpm_s`),v(`p${p}_cost2cpm_e`),t);
+      const cpm=v('p1_cpm2'),ctr=v('p1_ctr2')/100;
+      traffic=cpm>0?(adcost/cpm*1000)*ctr:0;
+    }
+    return{traffic,cvr:lerp(v(`p${p}_c2_s`),v(`p${p}_c2_e`),t)/100,aov:lerp(v(`p${p}_a2_s`),v(`p${p}_a2_e`),t),adcost};
+  }
+  // ch3
+  return{
+    traffic:lerp(v(`p${p}_t3_s`),v(`p${p}_t3_e`),t),
+    cvr:lerp(v(`p${p}_c3_s`),v(`p${p}_c3_e`),t)/100,
+    aov:lerp(v(`p${p}_a3_s`),v(`p${p}_a3_e`),t),
+    adcost:lerp(v(`p${p}_cost3_s`),v(`p${p}_cost3_e`),t)
+  };
+}
+
+function getSaleMonths(n,total){
+  if(n===0)return[];
+  const perYear=n;
+  const res=[];
+  for(let yr=0;yr<Math.ceil(total/12);yr++){
+    for(let i=0;i<perYear;i++){
+      const m=Math.round(yr*12+(i+0.5)*(12/perYear));
+      if(m>=1&&m<=total)res.push(m);
+    }
+  }
+  return res;
+}
+
+function setMode(ch,m){
+  modes[ch]=m;
+  ['manual','cpc','cpm'].forEach(x=>{
+    const el=document.getElementById('ch'+ch+'_'+x);
+    const btn=document.getElementById('ch'+ch+'_'+x+'_btn');
+    if(el)el.classList.toggle('hidden',x!==m);
+    if(btn)btn.classList.toggle('active',x===m);
+  });
+  calcAll();
+}
+
+function showPhase(pid,btn){
+  ['p1','p2','p3'].forEach(p=>document.getElementById('phase_'+p).classList.add('hidden'));
+  document.getElementById('phase_'+pid).classList.remove('hidden');
+  document.querySelectorAll('.phase-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  // sync phase names
+  ['2','3'].forEach(n=>{
+    ['p2','p3'].forEach(ph=>{
+      const el=document.getElementById(ph+'_ch'+n+'_name');
+      if(el)el.textContent=document.getElementById('ch_name_'+n).value||'CH'+n;
+    });
+    const e2=document.getElementById('ph2_ch'+n+'_name');if(e2)e2.textContent=document.getElementById('ch_name_'+n).value||'CH'+n;
+    const e3=document.getElementById('ph3_ch'+n+'_name');if(e3)e3.textContent=document.getElementById('ch_name_'+n).value||'CH'+n;
+  });
+  const n1_2=document.getElementById('ph2_ch1_name');if(n1_2)n1_2.textContent=document.getElementById('ch_name_1').value||'CH1';
+  const n1_3=document.getElementById('ph3_ch1_name');if(n1_3)n1_3.textContent=document.getElementById('ch_name_1').value||'CH1';
+}
+
+function calcAll(){
+  // ── 入力値取得 ────────────────────────────────────────────
+  const MONTHS=36;
+  const f2=v('s_f2')/100, df2=v('s_df2')/100, f3=v('s_f3')/100;
+  const cycle=v('s_cycle'), repeat=v('s_repeat')/100;
+  const subRate=v('s_sub')/100, subDisc=v('s_subdisc')/100, churn=v('s_churn')/100;
+  const saleDiscRate=v('s_sale_disc')/100;
+  const saleN=+(document.getElementById('s_sale_n')?.value)||0;
+  const dfirst=v('s_dfirst')/100, cogs=v('s_cogs')/100;
+  const clFixed=v('cl_opex_fixed'), clVar=v('cl_opex_var')/100;
+  const hyInitial=v('hy_initial'), hyMonthly=v('hy_monthly'), hyFeeRate=v('hy_fee_rate')/100;
+  // CHごとの飛躍コスト（飛躍担当のみ加算）
+  const chInit = [0,
+    chOwner[1]==='hy'?v('ch1_init'):0,
+    chOwner[2]==='hy'?v('ch2_init'):0,
+    chOwner[3]==='hy'?v('ch3_init'):0,
+    chOwner[4]==='hy'?v('ch4_init'):0
+  ];
+  const chMonthly = [0,
+    chOwner[1]==='hy'?v('ch1_monthly'):0,
+    chOwner[2]==='hy'?v('ch2_monthly'):0,
+    chOwner[3]==='hy'?v('ch3_monthly'):0,
+    chOwner[4]==='hy'?v('ch4_monthly'):0
+  ];
+  const totalChInit = chInit[1]+chInit[2]+chInit[3];
+  const totalChMonthly = chMonthly[1]+chMonthly[2]+chMonthly[3];
+  const crmCost=v('crm_cost'), crmFollowers=v('crm_followers');
+  const crmReg=v('crm_reg')/100, crmFreq=v('crm_freq');
+  // CRM KPIはループ内でフェーズ別に取得（getCrmKpi(m)）
+  function getCrmKpi(m){
+    const p1={ctr:v('crm_ctr')/100,cvr:v('crm_cvr')/100,aov:v('crm_aov')};
+    const p2={ctr:(v('p2_crm_ctr')||v('crm_ctr'))/100,cvr:(v('p2_crm_cvr')||v('crm_cvr'))/100,aov:v('p2_crm_aov')||v('crm_aov')};
+    const p3={ctr:(v('p3_crm_ctr')||v('crm_ctr'))/100,cvr:(v('p3_crm_cvr')||v('crm_cvr'))/100,aov:v('p3_crm_aov')||v('crm_aov')};
+    if(m<=12){const t=(m-1)/11;return{ctr:lerp(p1.ctr*100,p1.ctr*100,t)/100,cvr:p1.cvr,aov:p1.aov};}
+    if(m<=24){const t=(m-13)/11;return{ctr:lerp(p1.ctr*100,p2.ctr*100,t)/100,cvr:lerp(p1.cvr*100,p2.cvr*100,t)/100,aov:lerp(p1.aov,p2.aov,t)};}
+    const t=(m-25)/11;return{ctr:lerp(p2.ctr*100,p3.ctr*100,t)/100,cvr:lerp(p2.cvr*100,p3.cvr*100,t)/100,aov:lerp(p2.aov,p3.aov,t)};
+  }
+  const goalRev=v('g_rev'), goalMonth=Math.max(1,Math.min(MONTHS,v('g_month')));
+  const cycleM=cycle/30;
+  const saleMonths=getSaleMonths(saleN, MONTHS);
+  const crmNewPerMonth=Math.round(crmFollowers*crmReg);
+
+  // ── 36ヶ月計算 ───────────────────────────────────────────
+  let cohorts=[], subPool=0, existingPool=0;
+  const months=[];
+
+  for(let m=1; m<=MONTHS; m++){
+    const c1=getChM(1,m), c2=getChM(2,m), c3=getChM(3,m);
+    const n1=Math.round(c1.traffic*c1.cvr);
+    const n2=Math.round(c2.traffic*c2.cvr);
+    const n3=Math.round(c3.traffic*c3.cvr);
+    const totalNew=n1+n2+n3;
+    const adcost=c2.adcost+c3.adcost;
+    const avgAov=totalNew>0?(n1*c1.aov+n2*c2.aov+n3*c3.aov)/totalNew:5000;
+    const isSale=saleMonths.includes(m), sm=isSale?saleDiscRate:0;
+
+    const newRev=(n1*c1.aov+n2*c2.aov+n3*c3.aov)*(1-dfirst)*(1-sm);
+    cohorts=cohorts.map(c=>({...c,age:c.age+1}));
+    cohorts.push({n:totalNew,age:1,f2done:false,f3done:false});
+
+    let f2f3Rev=0, f2f3Count=0;
+    cohorts.forEach((co,i)=>{
+      if(i===cohorts.length-1) return;
+      if(co.age>=cycleM&&!co.f2done){
+        co.f2done=true;
+        const cnt=Math.round(co.n*f2);
+        f2f3Rev+=cnt*avgAov*(1-df2)*(1-sm);
+        f2f3Count+=cnt;
+      }
+      if(co.age>=cycleM*2&&!co.f3done){
+        co.f3done=true;
+        const cnt=Math.round(co.n*f3);
+        f2f3Rev+=cnt*avgAov*(1-sm);
+        f2f3Count+=cnt;
+      }
+    });
+
+    const rpCount=Math.round(existingPool*repeat);
+    const rpRev=rpCount*avgAov*(1-sm);
+    subPool=Math.round(subPool*(1-churn))+Math.round(totalNew*subRate);
+    const subRev=subRate>0?subPool*avgAov*(1-subDisc)*(1-sm):0;
+    existingPool+=totalNew+Math.round(f2f3Count);
+
+    const crmList=crmFollowers+crmNewPerMonth*m;
+    const {ctr:crmCtr,cvr:crmCvr,aov:crmAov}=getCrmKpi(m);
+    const crmRev=Math.round(crmList*crmCtr*crmCvr*crmFreq)*crmAov*(1-sm);
+
+    const totalRev=newRev+f2f3Rev+rpRev+subRev+crmRev;
+    const gross=totalRev*(1-cogs);
+    const clOpex=clFixed+totalRev*clVar;
+    const clOpProfit=gross-adcost-clOpex;
+    const hyFee=hyFeeRate*totalRev;
+    const hyCost=(m===1?(hyInitial+totalChInit):0)+(hyMonthly+totalChMonthly)+hyFee;
+    const realOpProfit=clOpProfit-crmCost-hyCost;
+
+    months.push({m,isSale,newCount:totalNew,f2f3Count:Math.round(f2f3Count),
+      rpCount,subPool,revenue:totalRev,adcost,gross,clOpex,crmCost,
+      clOpProfit,hyCost,realOpProfit});
+  }
+
+  // ── 集計 ────────────────────────────────────────────────
+  const totalRev36  = months.reduce((s,x)=>s+x.revenue,0);
+  const totalGross  = months.reduce((s,x)=>s+x.gross,0);
+  const totalClOp   = months.reduce((s,x)=>s+x.clOpProfit,0);
+  const totalHyCost = months.reduce((s,x)=>s+x.hyCost,0);
+  const totalRealOp = months.reduce((s,x)=>s+x.realOpProfit,0);
+  const totalHyFee  = months.reduce((s,x)=>s+hyFeeRate*x.revenue,0);
+  const avgNewPM    = months.reduce((s,x)=>s+x.newCount,0)/MONTHS;
+  const ltv         = avgNewPM>0?totalRev36/avgNewPM/MONTHS:0;
+  // ベースライン粗利（施策なし想定：現状月商×36ヶ月×(1-原価率)）
+  const baseMonthlyRev = v('g_base_rev');
+  const baseGross36    = baseMonthlyRev * 36 * (1 - cogs);
+  const grossIncrement = totalGross - baseGross36;  // 施策による粗利増分
+  const hyRoi = totalHyCost > 0
+    ? Math.round(grossIncrement / totalHyCost * 100)
+    : null;
+
+  const d1s=getChM(1,1),d2s=getChM(2,1),d3s=getChM(3,1);
+  const new1=Math.round(d1s.traffic*d1s.cvr)+Math.round(d2s.traffic*d2s.cvr)+Math.round(d3s.traffic*d3s.cvr);
+  const d1e=getChM(1,36),d2e=getChM(2,36),d3e=getChM(3,36);
+  const new36=Math.round(d1e.traffic*d1e.cvr)+Math.round(d2e.traffic*d2e.cvr)+Math.round(d3e.traffic*d3e.cvr);
+
+  // ── チャネルプレビュー ────────────────────────────────────
+  [1,2,3].forEach(ch=>{
+    const ds=getChM(ch,1), de=getChM(ch,12);
+    const ns=Math.round(ds.traffic*ds.cvr), ne=Math.round(de.traffic*de.cvr);
+    const el_ns=document.getElementById('cs_p1_n'+ch+'s');
+    const el_ne=document.getElementById('cs_p1_n'+ch+'e');
+    if(el_ns) el_ns.textContent=ns+'人';
+    if(el_ne) el_ne.textContent=ne+'人';
+    if(ch!==1){
+      const el_c=document.getElementById('cs_p1_cac'+ch);
+      if(el_c) el_c.textContent=ns>0&&ds.adcost>0?fmtY(ds.adcost/ns):'—';
+    }
+  });
+
+  // ── 目標達成チェック ─────────────────────────────────────
+  const targetRev=months[goalMonth-1].revenue;
+  const revPct=goalRev>0?Math.min(100,Math.round(targetRev/goalRev*100)):0;
+
+  // ── 画面KPI更新 ──────────────────────────────────────────
+  const set=(id,val)=>{const e=document.getElementById(id);if(e)e.textContent=val;};
+
+  // 年次サマリー
+  const yr=(s,e,fn)=>months.slice(s-1,e).reduce((a,x)=>a+fn(x),0);
+  [{s:1,e:12,y:'1'},{s:13,e:24,y:'2'},{s:25,e:36,y:'3'}].forEach(({s,e,y})=>{
+    set('y'+y+'_rev',   fmtY(yr(s,e,x=>x.revenue)));
+    set('y'+y+'_gross', fmtY(yr(s,e,x=>x.gross)));
+    const op=yr(s,e,x=>x.clOpProfit), re=yr(s,e,x=>x.realOpProfit);
+    const elOp=document.getElementById('y'+y+'_op');
+    const elRe=document.getElementById('y'+y+'_real');
+    if(elOp){elOp.textContent=fmtY(op);elOp.style.color=op<0?'var(--red)':'var(--black)';}
+    if(elRe){elRe.textContent=fmtY(re);elRe.style.color=re<0?'var(--red)':'var(--green)';}
+  });
+
+  // KPIパネル
+  const mRevEl=document.getElementById('m_rev');
+  if(mRevEl){mRevEl.textContent=fmtY(targetRev);mRevEl.className='hero-val'+(targetRev>=goalRev&&goalRev>0?' pos':'');}
+  set('m_rev_goal', goalMonth+'ヶ月目 / 目標 '+fmtY(goalRev));
+  const pbRev=document.getElementById('pb_rev');
+  if(pbRev) pbRev.style.width=revPct+'%';
+  const badgeEl=document.getElementById('m_rev_badge');
+  if(badgeEl) badgeEl.innerHTML=(targetRev>=goalRev&&goalRev>0)?'<span class="badge ok">目標達成</span>':'<span class="badge ng">'+revPct+'% 達成</span>';
+
+  set('m_gross', fmtY(totalGross));
+  const mOpEl=document.getElementById('m_op');
+  if(mOpEl){mOpEl.textContent=fmtY(totalClOp);mOpEl.className='hero-val'+(totalClOp<0?' neg':'');}
+  set('hy_total_cost', fmtY(totalHyCost));
+  const mRealEl=document.getElementById('m_real_op');
+  if(mRealEl){mRealEl.textContent=fmtY(totalRealOp);mRealEl.className='hero-val'+(totalRealOp<0?' neg':' pos');}
+  set('hy_roi', hyRoi!==null?(hyRoi>=0?'+':'')+hyRoi+'%':'—');
+  set('m_new',     new1+'人 → '+new36+'人');
+  set('m_ltv',     fmtY(ltv));
+  set('m_subpool', months[35].subPool+'人');
+  set('hy_fee_total', fmtY(totalHyFee));
+  set('crm_list_now', v('crm_followers').toLocaleString()+'人');
+  set('crm_list_36m', (v('crm_followers')+Math.round(v('crm_followers')*v('crm_reg')/100)*36).toLocaleString()+'人');
+
+  // ── グラフ（画面） ────────────────────────────────────────
+  const labels=months.map(x=>[1,6,12,18,24,30,36].includes(x.m)?'M'+x.m:'');
+  const cOpts={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},animation:{duration:150}};
+  const gridC='rgba(0,0,0,0.05)';
+  const phPlugin={id:'ph',beforeDraw(chart){
+    const{ctx,chartArea:{top,bottom},scales:{x}}=chart;if(!x)return;
+    [{s:0,e:11,c:'rgba(44,145,60,0.04)'},{s:12,e:23,c:'rgba(44,76,138,0.03)'},{s:24,e:35,c:'rgba(138,74,0,0.03)'}]
+    .forEach(({s,e,c})=>{const x1=x.getPixelForValue(s),x2=x.getPixelForValue(e);
+      ctx.save();ctx.fillStyle=c;ctx.fillRect(x1,top,x2-x1,bottom-top);ctx.restore();});
+  }};
+
+  const mkChart=(id,cfg)=>{
+    try{
+      const el=document.getElementById(id);if(!el)return;
+      if(el._sc){try{el._sc.destroy();}catch(e){}}
+      if(typeof Chart==='undefined'){return;}
+      el._sc=new Chart(el,cfg);
+    }catch(e){console.warn('chart error('+id+'):', e.message);}
+  };
+
+  mkChart('chartRevenue',{type:'bar',data:{labels:months.map(x=>x.m),datasets:[
+    {label:'月商',data:months.map(x=>Math.round(x.revenue)),backgroundColor:'#2C913C',borderRadius:0,order:2},
+    {label:'CL営業利益',data:months.map(x=>Math.round(x.clOpProfit)),backgroundColor:months.map(x=>x.clOpProfit>=0?'rgba(44,145,60,0.25)':'rgba(192,57,43,0.3)'),borderRadius:0,order:3},
+    {label:'実質利益',data:months.map(x=>Math.round(x.realOpProfit)),backgroundColor:months.map(x=>x.realOpProfit>=0?'rgba(0,0,0,0.12)':'rgba(192,57,43,0.2)'),borderRadius:0,order:4},
+    {label:'目標',data:months.map(()=>goalRev),type:'line',borderColor:'rgba(0,0,0,0.2)',borderDash:[4,3],pointRadius:0,borderWidth:1.5,backgroundColor:'transparent',order:1}
+  ]},plugins:[phPlugin],options:{...cOpts,scales:{
+    y:{ticks:{callback:n=>'¥'+Math.round(n/10000)+'万'},grid:{color:gridC}},
+    x:{ticks:{callback:(_,i)=>labels[i],autoSkip:false,maxRotation:0},grid:{display:false}}}}});
+
+  mkChart('chartCohort',{type:'bar',data:{labels:months.map(x=>x.m),datasets:[
+    {label:'新規',data:months.map(x=>x.newCount),backgroundColor:'#2C913C',borderRadius:0},
+    {label:'F2/F3',data:months.map(x=>x.f2f3Count),backgroundColor:'#1E6B2C',borderRadius:0},
+    {label:'月次RP',data:months.map(x=>x.rpCount),backgroundColor:'#888884',borderRadius:0},
+    {label:'サブスク',data:months.map(x=>subRate>0?x.subPool:0),backgroundColor:'#CACAC6',borderRadius:0}
+  ]},plugins:[phPlugin],options:{...cOpts,scales:{
+    x:{stacked:true,ticks:{callback:(_,i)=>labels[i],autoSkip:false,maxRotation:0},grid:{display:false}},
+    y:{stacked:true,grid:{color:gridC}}}}});
+
+  mkChart('chartCost',{type:'bar',data:{labels:months.map(x=>x.m),datasets:[
+    {label:'広告費',data:months.map(x=>Math.round(x.adcost)),backgroundColor:'#2C913C',borderRadius:0},
+    {label:'CL販管費',data:months.map(x=>Math.round(x.clOpex)),backgroundColor:'#888884',borderRadius:0},
+    {label:'HIYAKU',data:months.map(x=>Math.round(x.hyCost)),backgroundColor:'#000',borderRadius:0},
+    {label:'CRM',data:months.map(x=>x.crmCost),backgroundColor:'#CACAC6',borderRadius:0}
+  ]},plugins:[phPlugin],options:{...cOpts,scales:{
+    x:{stacked:true,ticks:{callback:(_,i)=>labels[i],autoSkip:false,maxRotation:0},grid:{display:false}},
+    y:{stacked:true,ticks:{callback:n=>'¥'+Math.round(n/10000)+'万'},grid:{color:gridC}}}}});
+
+  const annRev=[yr(1,12,x=>x.revenue),yr(13,24,x=>x.revenue),yr(25,36,x=>x.revenue)];
+  const annGross=[yr(1,12,x=>x.gross),yr(13,24,x=>x.gross),yr(25,36,x=>x.gross)];
+  const annOp=[yr(1,12,x=>x.clOpProfit),yr(13,24,x=>x.clOpProfit),yr(25,36,x=>x.clOpProfit)];
+  const annReal=[yr(1,12,x=>x.realOpProfit),yr(13,24,x=>x.realOpProfit),yr(25,36,x=>x.realOpProfit)];
+  mkChart('chartAnnual',{type:'bar',data:{
+    labels:['Year 1（成長期）','Year 2（安定期）','Year 3（拡大期）'],
+    datasets:[
+      {label:'年間売上',data:annRev.map(Math.round),backgroundColor:'#2C913C',borderRadius:0},
+      {label:'粗利',data:annGross.map(Math.round),backgroundColor:'rgba(44,145,60,0.4)',borderRadius:0},
+      {label:'CL営業利益',data:annOp.map(Math.round),backgroundColor:'rgba(0,0,0,0.15)',borderRadius:0},
+      {label:'実質利益',data:annReal.map(n=>Math.round(n)),backgroundColor:annReal.map(n=>n>=0?'rgba(0,0,0,0.3)':'rgba(192,57,43,0.5)'),borderRadius:0}
+    ]},options:{...cOpts,plugins:{legend:{display:true,position:'bottom',labels:{font:{size:12},boxWidth:12,padding:14}}},
+    scales:{y:{ticks:{callback:n=>'¥'+Math.round(n/10000)+'万'},grid:{color:gridC}},x:{grid:{display:false}}}}});
+
+  // ── テーブル（画面） ──────────────────────────────────────
+  const tbody=document.getElementById('tbl_body');
+  if(tbody) tbody.innerHTML=months.map(x=>`<tr${x.m%12===1?' class="yr-sep"':''}>
+    <td>M${x.m}${x.isSale?'<span class="sale-tag">SALE</span>':''}</td>
+    <td>${x.newCount}</td>
+    <td class="${x.revenue>=goalRev&&goalRev>0?'goal-met':''}">${fmtY(x.revenue)}</td>
+    <td>${x.adcost>0?fmtY(x.adcost):'—'}</td>
+    <td>${fmtY(x.gross)}</td>
+    <td>${fmtY(x.clOpex)}</td>
+    <td class="${x.clOpProfit<0?'neg-val':''}" style="color:${x.clOpProfit>=0?'var(--green-d)':'var(--red)'}">${fmtYF(x.clOpProfit)}</td>
+    <td>${fmtY(x.hyCost)}</td>
+    <td class="${x.realOpProfit<0?'neg-val':''}">${fmtYF(x.realOpProfit)}</td>
+  </tr>`).join('');
+
+  // ── 飛躍なし シナリオ計算（自然成長率を加味）──────────────────
+  let bTotalRev=0, bTotalGross=0, bTotalClOp=0, bLastNewCount=0;
+  const bMonthlyRevArr=[];
+  {
+    const bgr = v('base_growth')/100; // 月次自然成長率
+    const bt1_0=v('base_t1'), bc1_0=v('base_c1')/100, ba1_0=v('base_a1'), bcost1_0=v('base_cost1');
+    const bt2_0=v('base_t2'), bc2_0=v('base_c2')/100, ba2_0=v('base_a2'), bcost2_0=v('base_cost2');
+    const bt3_0=v('base_t3'), bc3_0=v('base_c3')/100, ba3_0=v('base_a3'), bcost3_0=v('base_cost3');
+
+    let bCohorts=[], bSubPool=0, bExistingPool=0;
+
+    for(let m=1;m<=36;m++){
+      const gf = Math.pow(1+bgr, m-1); // 成長係数
+      // 各月のKPIを自然成長率で伸ばす
+      const bt1=bt1_0*gf, bc1=Math.min(bc1_0*gf,0.3), ba1=ba1_0*gf;
+      const bt2=bt2_0*gf, bc2=Math.min(bc2_0*gf,0.3), ba2=ba2_0*gf;
+      const bt3=bt3_0*gf, bc3=Math.min(bc3_0*gf,0.3), ba3=ba3_0*gf;
+      const bAdcost=(bcost1_0+bcost2_0+bcost3_0)*gf;
+      const bn1=Math.round(bt1*bc1), bn2=Math.round(bt2*bc2), bn3=Math.round(bt3*bc3);
+      const bTotalNew = bn1+bn2+bn3;
+      const bAvgAov = bTotalNew>0?(bn1*ba1+bn2*ba2+bn3*ba3)/bTotalNew:5000;
+
+      const sm = saleMonths.includes(m) ? saleDiscRate : 0;
+      const bNewRev=(bn1*ba1+bn2*ba2+bn3*ba3)*(1-dfirst)*(1-sm);
+      bCohorts=bCohorts.map(c=>({...c,age:c.age+1}));
+      bCohorts.push({n:bTotalNew,age:1,f2done:false,f3done:false});
+      let bf2f3Rev=0;
+      bCohorts.forEach((co,i)=>{
+        if(i===bCohorts.length-1) return;
+        if(co.age>=cycleM&&!co.f2done){co.f2done=true;bf2f3Rev+=Math.round(co.n*f2)*bAvgAov*(1-df2)*(1-sm);}
+        if(co.age>=cycleM*2&&!co.f3done){co.f3done=true;bf2f3Rev+=Math.round(co.n*f3)*bAvgAov*(1-sm);}
+      });
+      const bRpRev=Math.round(bExistingPool*repeat)*bAvgAov*(1-sm);
+      bSubPool=Math.round(bSubPool*(1-churn))+Math.round(bTotalNew*subRate);
+      const bSubRev=subRate>0?bSubPool*bAvgAov*(1-subDisc)*(1-sm):0;
+      bExistingPool+=bTotalNew;
+      const bRev=bNewRev+bf2f3Rev+bRpRev+bSubRev;
+      const bGross=bRev*(1-cogs);
+      const bOpex=clFixed+bRev*clVar;
+      bMonthlyRevArr.push(Math.round(bRev));
+      bTotalRev  += bRev;
+      bTotalGross+= bGross;
+      bTotalClOp += bGross-bAdcost-bOpex;
+      if(m===36) bLastNewCount=bTotalNew;
+    }
+
+    // 比較パネル DOM更新
+    const diffColor=(d)=>d>0?'var(--green-d)':d<0?'var(--red)':'inherit';
+    const pctStr=(base,w)=>base>0?(w-base>=0?'+':'')+Math.round((w-base)/base*100)+'%':'—';
+    const setEl=(id,val,color)=>{const e=document.getElementById(id);if(e){e.textContent=val;if(color)e.style.color=color;}};
+
+    setEl('cmp_rev_base',  fmtY(bTotalRev));
+    setEl('cmp_rev_with',  fmtY(totalRev36),  'var(--green-d)');
+    setEl('cmp_rev_diff',  (totalRev36-bTotalRev>=0?'+':'')+fmtY(totalRev36-bTotalRev), diffColor(totalRev36-bTotalRev));
+    setEl('cmp_rev_pct',   pctStr(bTotalRev,totalRev36));
+
+    setEl('cmp_gross_base',fmtY(bTotalGross));
+    setEl('cmp_gross_with',fmtY(totalGross),   'var(--green-d)');
+    setEl('cmp_gross_diff',(totalGross-bTotalGross>=0?'+':'')+fmtY(totalGross-bTotalGross), diffColor(totalGross-bTotalGross));
+    setEl('cmp_gross_pct', pctStr(bTotalGross,totalGross));
+
+    setEl('cmp_op_base',   fmtY(bTotalClOp));
+    setEl('cmp_op_with',   fmtY(totalClOp),    'var(--green-d)');
+    setEl('cmp_op_diff',   (totalClOp-bTotalClOp>=0?'+':'')+fmtY(totalClOp-bTotalClOp), diffColor(totalClOp-bTotalClOp));
+    setEl('cmp_op_pct',    pctStr(bTotalClOp,totalClOp));
+
+    // HIYAKU ROI
+    const roiVal = totalHyCost>0 ? Math.round((totalGross-bTotalGross)/totalHyCost*100) : null;
+    const roiStr = roiVal!==null ? (roiVal>=0?'+':'')+roiVal+'%' : '—';
+    setEl('cmp_roi_with', roiStr, roiVal>0?'var(--green-d)':roiVal<0?'var(--red)':'inherit');
+    setEl('cmp_roi_val',  roiStr, roiVal>0?'var(--green-d)':roiVal<0?'var(--red)':'inherit');
+    setEl('cmp_roi_note', '粗利増分÷HIYAKU費用');
+    setEl('cmp_cust_base', bLastNewCount+'人');
+    setEl('cmp_cust_with', new36+'人',          'var(--green-d)');
+    setEl('cmp_cust_diff', (new36-bLastNewCount>=0?'+':'')+( new36-bLastNewCount)+'人', diffColor(new36-bLastNewCount));
+    setEl('cmp_cust_pct',  pctStr(bLastNewCount,new36));
+
+    // 比較グラフ（月次推移 飛躍なし vs 飛躍あり）
+    const cmpLabels=months.map(x=>[1,6,12,18,24,30,36].includes(x.m)?'M'+x.m:'');
+    mkChart('chartCompare',{type:'line',
+      data:{
+        labels:months.map(x=>x.m),
+        datasets:[
+          {label:'飛躍なし（自然成長）',data:bMonthlyRevArr,borderColor:'#888884',backgroundColor:'rgba(136,136,132,0.08)',borderWidth:2,pointRadius:0,fill:true,tension:0.3,borderDash:[5,4]},
+          {label:'飛躍あり',data:months.map(x=>Math.round(x.revenue)),borderColor:'#2C913C',backgroundColor:'rgba(44,145,60,0.12)',borderWidth:2.5,pointRadius:0,fill:true,tension:0.3}
+        ]
+      },
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:true,position:'bottom',labels:{font:{size:12},boxWidth:14,padding:14}}},
+        scales:{
+          y:{ticks:{callback:n=>'¥'+Math.round(n/10000)+'万'},grid:{color:'rgba(0,0,0,0.05)'}},
+          x:{ticks:{callback:(_,i)=>cmpLabels[i],autoSkip:false,maxRotation:0},grid:{display:false}}
+        }
+      }
+    });
+  }
+
+  // ── window._simData に保存（updateReport用） ─────────────
+  // インパクトブロック更新（飛躍なし計算後）
+  {
+    const fmtD = val => (val>=0?'+':'')+fmtY(val);
+    const el_rd  = document.getElementById('impact_rev_diff');
+    const el_gd  = document.getElementById('impact_gross_diff');
+    const el_roi = document.getElementById('impact_roi');
+    if(el_rd)  el_rd.textContent  = fmtD(totalRev36 - bTotalRev);
+    if(el_gd)  el_gd.textContent  = fmtD(totalGross - bTotalGross);
+    if(el_roi && totalHyCost>0){
+      const roi = Math.round((totalGross-bTotalGross)/totalHyCost*100);
+      el_roi.textContent = (roi>=0?'+':'')+roi+'%';
+    }
+  }
+  window._simData={
+    months,totalRev36,totalGross,totalClOp,totalHyCost,totalRealOp,
+    baseGross36,grossIncrement,baseMonthlyRev,
+    baseline:{bTotalRev,bTotalGross,bTotalClOp,bLastNewCount,bMonthlyRevArr},
+    totalHyFee,ltv,hyRoi,new1,new36,goalRev,goalMonth,
+    hyInitial,hyMonthly,hyFeeRate,crmCost,subRate,
+    totalChInit,totalChMonthly
+  };
+}
+
+// window.calcAll を calcAll に紐付け
+// ── チャネル担当設定 ────────────────────────────────────────
+// ch_owner[1/2/3] = 'cl'(クライアント) or 'hy'(飛躍)
+const chOwner = {1:'cl', 2:'hy', 3:'hy', 4:'hy'};
+
+function setOwner(ch, owner){
+  chOwner[ch] = owner;
+  // ボタン見た目
+  ['cl','hy'].forEach(o => {
+    const btn = document.getElementById('ch'+ch+'_own_'+o);
+    if(btn) btn.classList.toggle('active', o===owner);
+  });
+  // バッジ
+  const badge = document.getElementById('ch'+ch+'_badge');
+  if(badge){
+    badge.textContent = owner==='cl' ? 'クライアント継続' : '飛躍担当';
+    badge.className = 'owner-badge ' + (owner==='cl' ? 'badge-cl' : 'badge-hy');
+  }
+  // 飛躍コストブロック表示/非表示
+  const costBlock = document.getElementById('ch'+ch+'_cost_block');
+  if(costBlock) costBlock.style.display = owner==='hy' ? 'block' : 'none';
+  calcAll();
+}
+
+// クライアント担当CHの「飛躍なし」KPIと同期
+// → calcAll内で chOwner を参照して、'cl'のCHは現状値×自然成長に上書き
+function getChKpi(ph, ch){
+  // ph=1/2/3, ch=1/2/3
+  // phaseごとのKPIを返す（開始値のみ使用、成長はcalcAll内で処理）
+  if(chOwner[ch]==='cl'){
+    // クライアント担当：現状値（base_）を返す
+    const t=v('base_t'+ch), c=v('base_c'+ch), a=v('base_a'+ch), cost=v('base_cost'+ch);
+    return {t,c,a,cost};
+  }
+  // 飛躍担当：フォームの値をそのまま使う（既存ロジック）
+  return null; // null = 既存ロジック通り
+}
+
+function setGrowthRate(rate){
+  const el = document.getElementById('base_growth');
+  if(!el) return;
+  el.value = rate;
+  // ボタンのアクティブ状態を更新
+  document.querySelectorAll('.growth-btn').forEach(btn => {
+    const isActive = btn.dataset.rate === String(rate);
+    btn.style.background = isActive ? 'var(--green)' : 'var(--gray-100)';
+    btn.style.color = isActive ? '#fff' : 'var(--gray-500)';
+    btn.style.borderColor = isActive ? 'var(--green)' : 'var(--border)';
+  });
+  calcAll();
+}
+window.setGrowthRate = setGrowthRate;
+
+window.calcAll=calcAll;
+
+
+
+function switchTab(tab,btn){
+  ['revenue','cohort','cost','annual','compare'].forEach(t=>
+    document.getElementById('tab_'+t).style.display=t===tab?'block':'none'
+  );
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Comma-formatted number inputs ──────────────────────────
+function rawVal(el){
+  // strip commas and parse
+  return parseFloat(el.value.replace(/,/g,''))||0;
+}
+function formatComma(el){
+  const n=rawVal(el);
+  if(n===0&&el.value.trim()==='')return;
+  // keep decimals for % fields (step contains "0.1")
+  const step=el.getAttribute('step');
+  const isDecimal=step&&step.includes('.');
+  el.value=isDecimal
+    ? n.toLocaleString('ja-JP',{maximumFractionDigits:2})
+    : Math.round(n).toLocaleString('ja-JP');
+}
+function unformatComma(el){
+  // on focus: strip commas so cursor works normally
+  el.value=String(rawVal(el)||'');
+}
+
+// Override v() to handle comma-stripped values
+// (already defined above; redefine to handle text inputs)
+window.v=function(id){
+  const el=document.getElementById(id);
+  if(!el)return 0;
+  return rawVal(el);
+};
+
+document.querySelectorAll('input.fi').forEach(el=>{
+  // format on blur
+  el.addEventListener('blur',()=>{formatComma(el);calcAll();});
+  // unformat on focus
+  el.addEventListener('focus',()=>{unformatComma(el);});
+  // recalc on input (while typing raw numbers)
+  el.addEventListener('input',calcAll);
+  // initial format
+  formatComma(el);
+});
+
+// text inputs (channel names, client name)
+document.querySelectorAll('input[type=text]:not(.fi):not(.cn-input)').forEach(el=>{
+  el.addEventListener('input',calcAll);
+});
+document.querySelectorAll('.cn-input').forEach(el=>{
+  el.addEventListener('input',calcAll);
+});
+
+calcAll();
+
+// Print button — multiple fallback methods
+(function(){
+  const btn = document.getElementById('printBtn');
+  if(!btn) return;
+  btn.addEventListener('click', function(){
+    try {
+      if(typeof window.print === 'function') {
+        window.print();
+      }
+    } catch(e) {
+      // fallback: open in new tab for printing
+      const w = window.open('', '_blank');
+      if(w) {
+        w.document.write(document.documentElement.outerHTML);
+        w.document.close();
+        w.focus();
+        setTimeout(()=>{ try{ w.print(); }catch(e2){} }, 800);
+      }
+    }
+  });
+})();
+
+
+// ── レポートDOM更新（calcAllのグローバルデータを参照）──────────
+function updateReport(d) {
+  try {
+  const rOpts = { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{y:{ticks:{callback:n=>'¥'+Math.round(n/10000)+'万',font:{size:8}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:7}},grid:{display:false}}} };
+  const mk = (id, cfg) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (el._c) { el._c.destroy(); el._c = null; }
+    el._c = new Chart(el, cfg);
+  };
+  const fmtY = n => {
+    const a=Math.abs(n);
+    if(a>=100000000)return (n<0?'-':'')+'¥'+(a/100000000).toFixed(1)+'億';
+    if(a>=10000000)return (n<0?'-':'')+'¥'+(a/10000000).toFixed(1)+'千万';
+    if(a>=1000000)return (n<0?'-':'')+'¥'+(a/1000000).toFixed(1)+'M';
+    if(a>=10000)return (n<0?'-':'')+'¥'+(a/10000).toFixed(1)+'万';
+    return (n<0?'-':'')+'¥'+a.toLocaleString();
+  };
+  const set = (id, val, color) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = val;
+    if (color) el.style.color = color;
+  };
+  const fmtD = v => (v>=0?'+':'')+fmtY(v);
+  const pct = (b,w) => b>0?(w-b>=0?'+':'')+Math.round((w-b)/b*100)+'%':'—';
+  const grnD = v => v>0?'var(--green-d)':v<0?'#C0392B':'inherit';
+
+  const { months, totalRev36, totalGross, totalClOp, totalHyCost,
+          totalHyFee, ltv, hyRoi, new1, new36, goalRev, goalMonth,
+          hyInitial, hyMonthly, hyFeeRate, crmCost, subRate,
+          totalChInit, totalChMonthly,
+          baseline } = d;
+  const { bTotalRev=0, bTotalGross=0, bTotalClOp=0, bLastNewCount=0, bMonthlyRevArr=[] } = baseline || {};
+
+  const yr = (s,e,fn) => months.slice(s-1,e).reduce((a,x)=>a+fn(x),0);
+  const clientName = document.getElementById('client_name')?.value || '○○株式会社';
+  const dateStr = new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'});
+  const mLabels = months.map(x => [1,6,12,18,24,30,36].includes(x.m) ? 'M'+x.m : '');
+
+  // ── 表紙 ──────────────────────────────────────────────────
+  set('rp_client_name', clientName);
+  set('rp_date', dateStr);
+  set('rp_cv_rev_diff',   fmtD(totalRev36 - bTotalRev));
+  set('rp_cv_gross_diff', fmtD(totalGross - bTotalGross));
+  const roiCv = totalHyCost>0 ? Math.round((totalGross-bTotalGross)/totalHyCost*100) : null;
+  set('rp_cv_roi', roiCv!=null ? (roiCv>=0?'+':'')+roiCv+'%' : '—');
+  ['1','2','3','4','5','6','7','8','9','10'].forEach(n => set('rp_fc'+n, clientName+' 御中'));
+
+  // ── P1: 現状 ──────────────────────────────────────────────
+  set('rp_p1_base_rev',   fmtY(d.baseMonthlyRev||0));
+  set('rp_p1_goal_rev',   fmtY(goalRev));
+  set('rp_p1_goal_month', goalMonth+'ヶ月目');
+  set('rp_p1_growth',     (document.getElementById('base_growth')?.value||'0.8')+'%/月');
+  [1,2,3].forEach(i => {
+    set('rp_ch'+i+'_name_p1', document.getElementById('ch_name_'+i)?.value||'CH'+i);
+    set('rp_b_t'+i,    (document.getElementById('base_t'+i)?.value||'—')+'人/月');
+    set('rp_b_c'+i,    (document.getElementById('base_c'+i)?.value||'—')+'%');
+    set('rp_b_a'+i,    fmtY(Number(document.getElementById('base_a'+i)?.value)||0));
+    set('rp_b_cost'+i, fmtY(Number(document.getElementById('base_cost'+i)?.value)||0));
+  });
+  set('rp_base_rev36',  fmtY(bTotalRev));
+  set('rp_base_gross36',fmtY(bTotalGross));
+  set('rp_base_rev_m36',fmtY(bMonthlyRevArr[35]||0));
+  set('rp_base_new36',  bLastNewCount+'人');
+  // 飛躍なしグラフ
+  mk('rpChartBaseline', {type:'line', data:{labels:mLabels, datasets:[
+    {label:'飛躍なし', data:bMonthlyRevArr, borderColor:'#888884', backgroundColor:'rgba(136,136,132,0.08)', borderWidth:1.5, pointRadius:0, fill:true, tension:0.3, borderDash:[4,3]}
+  ]}, options:{...rOpts, plugins:{legend:{display:false}}}});
+
+  // ── P2〜4: フェーズ別CH ────────────────────────────────────
+  [['p1',1,12],['p2',13,24],['p3',25,36]].forEach(([ph,ms,me],pi) => {
+    [1,2,3].forEach(i => {
+      set('rp_ch'+i+'_name_'+ph, document.getElementById('ch_name_'+i)?.value||'CH'+i);
+      ['t','c','a'].forEach(k => {
+        set('rp_'+ph+'_'+k+i+'_s', document.getElementById('p1_'+k+i+'_s')?.value||'—');
+        set('rp_'+ph+'_'+k+i+'_e', document.getElementById('p'+(pi+1)+'_'+k+i+'_e')?.value||'—');
+      });
+    });
+    ['cost2','cost3'].forEach(k => {
+      set('rp_'+ph+'_'+k+'_s', document.getElementById('p1_'+k+'_s')?.value||'—');
+      set('rp_'+ph+'_'+k+'_e', document.getElementById('p'+(pi+1)+'_'+k+'_e')?.value||'—');
+    });
+    if(pi>0){
+      ['ctr','cvr','aov'].forEach(k => set('rp_'+ph+'_crm_'+k, document.getElementById('p'+(pi+1)+'_crm_'+k)?.value||'—'));
+    } else {
+      set('rp_p1_crm_ctr', document.getElementById('crm_ctr')?.value||'—');
+      set('rp_p1_crm_cvr', document.getElementById('crm_cvr')?.value||'—');
+      set('rp_p1_crm_aov', document.getElementById('crm_aov')?.value||'—');
+    }
+    const phRev = yr(ms,me,x=>x.revenue);
+    const phGross = yr(ms,me,x=>x.gross);
+    const lastM = months[me-1];
+    set('rp_'+ph+'_rev_total',  fmtY(phRev));
+    set('rp_'+ph+'_gross_total',fmtY(phGross));
+    set('rp_'+ph+'_rev_last',   fmtY(lastM?.revenue||0));
+    set('rp_'+ph+'_new_last',   (lastM?.newCount||0)+'人');
+  });
+
+  // ── P5: リピート設計 ───────────────────────────────────────
+  set('rp_f2',   (document.getElementById('s_f2')?.value||'—')+'%');
+  set('rp_df2',  (document.getElementById('s_df2')?.value||'0')+'%');
+  set('rp_f3',   (document.getElementById('s_f3')?.value||'—')+'%');
+  set('rp_cycle',(document.getElementById('s_cycle')?.value||'—')+'日');
+  set('rp_dfirst',(document.getElementById('s_dfirst')?.value||'0')+'%');
+  set('rp_repeat',(document.getElementById('s_repeat')?.value||'—')+'%');
+  set('rp_crm_followers', (document.getElementById('crm_followers')?.value||'—')+'人');
+  set('rp_crm_reg',  (document.getElementById('crm_reg')?.value||'—')+'%/月');
+  set('rp_crm_ctr_cvr', (document.getElementById('crm_ctr')?.value||'—')+"% / "+(document.getElementById('crm_cvr')?.value||'—')+"%" );
+  set('rp_crm_freq', (document.getElementById('crm_freq')?.value||'—')+'回/月');
+
+  // ── P6: コスト ────────────────────────────────────────────
+  set('rp_cogs',       (document.getElementById('s_cogs')?.value||'—')+'%');
+  set('rp_sale_disc',  (document.getElementById('s_sale_disc')?.value||'—')+'%');
+  set('rp_sale_count', (document.getElementById('s_sale_count')?.value||'—')+'回/年');
+  set('rp_cl_fixed',   fmtY(Number(document.getElementById('cl_fixed')?.value)||0)+'/月');
+  set('rp_cl_var',     (document.getElementById('cl_var')?.value||'—')+'%');
+  const clOpex36 = months.reduce((a,x)=>a+(Number(document.getElementById('cl_fixed')?.value)||0)+x.revenue*(Number(document.getElementById('cl_var')?.value)||0)/100,0);
+  set('rp_cl_opex_total', fmtY(clOpex36));
+  const rpChInit = totalChInit||0, rpChMon = totalChMonthly||0;
+  set('rp_hy_init',    fmtY(hyInitial + rpChInit));
+  set('rp_hy_monthly', fmtY((hyMonthly + rpChMon) * 36));
+  set('rp_hy_fee',     fmtY(totalHyFee));
+  set('rp_hy_total',   fmtY(totalHyCost));
+
+  // ── P7: インパクトサマリー ────────────────────────────────
+  const revDiff=totalRev36-bTotalRev, grossDiff=totalGross-bTotalGross;
+  set('rp_imp_rev_diff',  fmtD(revDiff),  grnD(revDiff));
+  set('rp_imp_rev_base',  fmtY(bTotalRev));
+  set('rp_imp_rev_with',  fmtY(totalRev36));
+  set('rp_imp_rev_pct',   pct(bTotalRev,totalRev36));
+  set('rp_imp_gross_diff',fmtD(grossDiff),grnD(grossDiff));
+  set('rp_imp_gross_base',fmtY(bTotalGross));
+  set('rp_imp_gross_with',fmtY(totalGross));
+  set('rp_imp_gross_pct', pct(bTotalGross,totalGross));
+  const roiImp = totalHyCost>0?Math.round(grossDiff/totalHyCost*100):null;
+  set('rp_imp_roi',     roiImp!=null?(roiImp>=0?'+':'')+roiImp+'%':'—', grnD(roiImp||0));
+  set('rp_imp_hycost',  'HIYAKU合計 '+fmtY(totalHyCost));
+  // インパクトグラフ
+  mk('rpChartImpact', {type:'line', data:{labels:mLabels, datasets:[
+    {label:'飛躍なし', data:bMonthlyRevArr, borderColor:'#888884', backgroundColor:'rgba(136,136,132,0.06)', borderWidth:1.5, pointRadius:0, fill:true, tension:0.3, borderDash:[4,3]},
+    {label:'飛躍あり', data:months.map(x=>Math.round(x.revenue)), borderColor:'#2C913C', backgroundColor:'rgba(44,145,60,0.1)', borderWidth:2, pointRadius:0, fill:true, tension:0.3}
+  ]}, options:{...rOpts, plugins:{legend:{display:true,position:'bottom',labels:{font:{size:8},boxWidth:10,padding:8}}}}});
+
+  // ── P8: 年次サマリー ──────────────────────────────────────
+  [[1,'y1',1,12],[2,'y2',13,24],[3,'y3',25,36]].forEach(([yn,yid,ms,me]) => {
+    const yRev=yr(ms,me,x=>x.revenue), yGross=yr(ms,me,x=>x.gross);
+    const yOp=yr(ms,me,x=>x.clOpProfit), yReal=yr(ms,me,x=>x.realOpProfit);
+    set('rp_'+yid+'_rev', fmtY(yRev));
+    set('rp_'+yid+'_sub', '粗利 '+fmtY(yGross)+'  CL営業利益 '+fmtY(yOp)+'  実質利益 '+fmtY(yReal));
+  });
+  mk('rpChartAnnual', {type:'bar', data:{
+    labels:['Year 1（成長期）','Year 2（安定期）','Year 3（拡大期）'],
+    datasets:[
+      {label:'年間売上', data:[yr(1,12,x=>x.revenue),yr(13,24,x=>x.revenue),yr(25,36,x=>x.revenue)], backgroundColor:'#2C913C'},
+      {label:'粗利',     data:[yr(1,12,x=>x.gross),yr(13,24,x=>x.gross),yr(25,36,x=>x.gross)],     backgroundColor:'rgba(44,145,60,0.4)'},
+      {label:'実質利益', data:[yr(1,12,x=>x.realOpProfit),yr(13,24,x=>x.realOpProfit),yr(25,36,x=>x.realOpProfit)], backgroundColor:'rgba(220,100,80,0.6)'}
+    ]
+  }, options:{...rOpts, plugins:{legend:{display:true,position:'bottom',labels:{font:{size:8},boxWidth:10,padding:8}}}, scales:{y:{ticks:{callback:n=>'¥'+Math.round(n/10000)+'万',font:{size:8}}},x:{ticks:{font:{size:8}}}}}});
+
+  // ── P9: KPI比較 ───────────────────────────────────────────
+  set('rp_cmp_rev_base',   fmtY(bTotalRev));
+  set('rp_cmp_rev_with',   fmtY(totalRev36));
+  set('rp_cmp_rev_diff',   fmtD(revDiff), grnD(revDiff));
+  set('rp_cmp_rev_pct',    pct(bTotalRev,totalRev36));
+  set('rp_cmp_gross_base', fmtY(bTotalGross));
+  set('rp_cmp_gross_with', fmtY(totalGross));
+  set('rp_cmp_gross_diff', fmtD(grossDiff), grnD(grossDiff));
+  set('rp_cmp_gross_pct',  pct(bTotalGross,totalGross));
+  set('rp_cmp_op_base',    fmtY(bTotalClOp));
+  set('rp_cmp_op_with',    fmtY(totalClOp));
+  set('rp_cmp_op_diff',    fmtD(totalClOp-bTotalClOp), grnD(totalClOp-bTotalClOp));
+  set('rp_cmp_roi',        roiImp!=null?(roiImp>=0?'+':'')+roiImp+'%':'—', grnD(roiImp||0));
+  set('rp_cmp_cust_base',  bLastNewCount+'人');
+  set('rp_cmp_cust_with',  new36+'人');
+  set('rp_cmp_cust_diff',  '+'+(new36-bLastNewCount)+'人', 'var(--green-d)');
+  set('rp_cmp_cust_pct',   pct(bLastNewCount,new36));
+  set('rp_cmp_ltv',        fmtY(ltv));
+
+  // ── P10: 月次テーブル ─────────────────────────────────────
+  const tbody = document.getElementById('rp_tbl_body');
+  if(tbody){
+    tbody.innerHTML = months.map(x => {
+      const isSale = x.isSale;
+      return `<tr style="background:${x.m%2?'#fff':'#f9f9f7'}">
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:center;font-weight:${[12,24,36].includes(x.m)?'700':'400'}">${'M'+x.m}${isSale?'<span style="background:var(--green);color:#fff;font-size:6pt;padding:0 3px;margin-left:2px">SALE</span>':''}</td>
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:right;font-family:monospace">${x.newCount}</td>
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:right;font-family:monospace;color:var(--green-d);font-weight:600">${fmtY(x.revenue)}</td>
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:right;font-family:monospace">${fmtY(x.gross)}</td>
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:right;font-family:monospace">${fmtY(x.adCost||0)}</td>
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:right;font-family:monospace">${fmtY(x.clOpProfit)}</td>
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:right;font-family:monospace">${fmtY(x.hyCost)}</td>
+        <td style="padding:1.5mm 2mm;border:1px solid #e8e8e4;text-align:right;font-family:monospace;${x.realOpProfit>=0?'color:var(--green-d)':'color:#C0392B'}">${fmtY(x.realOpProfit)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  } catch(e){ console.error('updateReport失敗:', e); }
+}
+function openReport() {
+  const d = window._simData;
+  if(!d){ alert('先にシミュレーションを実行してください'); return; }
+  // レポート用に追加データを付与
+  const v = id => { const el=document.getElementById(id); return el?el.value:null; };
+  const extra = {
+    clientName: v('client_name')||'○○株式会社',
+    baseMonthlyRev: Number(v('g_base_rev'))||0,
+    baseGrowth: Number(v('base_growth'))||0.8,
+    chName1: v('ch_name_1')||'CH1', chName2: v('ch_name_2')||'CH2', chName3: v('ch_name_3')||'CH3',
+    baseT1:v('base_t1'), baseC1:v('base_c1'), baseA1:Number(v('base_a1')), baseCost1:Number(v('base_cost1')),
+    baseT2:v('base_t2'), baseC2:v('base_c2'), baseA2:Number(v('base_a2')), baseCost2:Number(v('base_cost2')),
+    baseT3:v('base_t3'), baseC3:v('base_c3'), baseA3:Number(v('base_a3')), baseCost3:Number(v('base_cost3')),
+    p1_t1_s:v('p1_t1_s'),p1_t1_e:v('p1_t1_e'),p1_c1_s:v('p1_c1_s'),p1_c1_e:v('p1_c1_e'),p1_a1_s:Number(v('p1_a1_s')),p1_a1_e:Number(v('p1_a1_e')),
+    p1_t2_s:v('p1_t2_s'),p1_t2_e:v('p1_t2_e'),p1_c2_s:v('p1_c2_s'),p1_c2_e:v('p1_c2_e'),p1_a2_s:Number(v('p1_a2_s')),p1_a2_e:Number(v('p1_a2_e')),
+    p1_cost2_s:v('p1_cost2_s'),p1_cost2_e:v('p1_cost2_e'),
+    p1_t3_s:v('p1_t3_s'),p1_t3_e:v('p1_t3_e'),p1_c3_s:v('p1_c3_s'),p1_c3_e:v('p1_c3_e'),p1_a3_s:Number(v('p1_a3_s')),p1_a3_e:Number(v('p1_a3_e')),
+    p1_cost3_s:v('p1_cost3_s'),p1_cost3_e:v('p1_cost3_e'),
+    p1_crm_ctr:v('crm_ctr'),p1_crm_aov:Number(v('crm_aov')),
+    p2_t1_s:v('p2_t1_s'),p2_t1_e:v('p2_t1_e'),p2_c1_s:v('p2_c1_s'),p2_c1_e:v('p2_c1_e'),p2_a1_s:Number(v('p2_a1_s')),p2_a1_e:Number(v('p2_a1_e')),
+    p2_t2_s:v('p2_t2_s'),p2_t2_e:v('p2_t2_e'),p2_c2_s:v('p2_c2_s'),p2_c2_e:v('p2_c2_e'),p2_a2_s:Number(v('p2_a2_s')),p2_a2_e:Number(v('p2_a2_e')),
+    p2_cost2_s:v('p2_cost2_s'),p2_cost2_e:v('p2_cost2_e'),
+    p2_t3_s:v('p2_t3_s'),p2_t3_e:v('p2_t3_e'),p2_c3_s:v('p2_c3_s'),p2_c3_e:v('p2_c3_e'),p2_a3_s:Number(v('p2_a3_s')),p2_a3_e:Number(v('p2_a3_e')),
+    p2_cost3_s:v('p2_cost3_s'),p2_cost3_e:v('p2_cost3_e'),
+    p2_crm_ctr:v('p2_crm_ctr'),p2_crm_aov:Number(v('p2_crm_aov')),
+    p3_t1_s:v('p3_t1_s'),p3_t1_e:v('p3_t1_e'),p3_c1_s:v('p3_c1_s'),p3_c1_e:v('p3_c1_e'),p3_a1_s:Number(v('p3_a1_s')),p3_a1_e:Number(v('p3_a1_e')),
+    p3_t2_s:v('p3_t2_s'),p3_t2_e:v('p3_t2_e'),p3_c2_s:v('p3_c2_s'),p3_c2_e:v('p3_c2_e'),p3_a2_s:Number(v('p3_a2_s')),p3_a2_e:Number(v('p3_a2_e')),
+    p3_cost2_s:v('p3_cost2_s'),p3_cost2_e:v('p3_cost2_e'),
+    p3_t3_s:v('p3_t3_s'),p3_t3_e:v('p3_t3_e'),p3_c3_s:v('p3_c3_s'),p3_c3_e:v('p3_c3_e'),p3_a3_s:Number(v('p3_a3_s')),p3_a3_e:Number(v('p3_a3_e')),
+    p3_cost3_s:v('p3_cost3_s'),p3_cost3_e:v('p3_cost3_e'),
+    p3_crm_ctr:v('p3_crm_ctr'),p3_crm_aov:Number(v('p3_crm_aov')),
+    f2:v('s_f2'),f3:v('s_f3'),cycle:v('s_cycle'),repeat:v('s_repeat'),
+    cogs:v('s_cogs'),saleDisc:v('s_sale_disc'),saleCount:v('s_sale_count'),
+    clFixed:Number(v('cl_fixed')),clVar:v('cl_var'),
+  };
+  const payload = {...d, ...extra};
+  try { localStorage.setItem('hiyakuSimData', JSON.stringify(payload)); } catch(e){}
+  const encoded = encodeURIComponent(JSON.stringify(payload));
+  window.open('report.html?d=' + encoded, '_blank');
+}
+
+function closePreview() {
+  document.getElementById('report').style.display = 'none';
+  document.querySelector('.main').style.display = 'block';
+  document.querySelector('header').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+
+// ── フェーズ間 値の自動引き継ぎ ─────────────────────────────
+const PHASE_LINKS = [
+  // [p1終了ID, p2開始ID, p2終了ID, p3開始ID]
+  // CH1
+  ['p1_t1_e',    'p2_t1_s',    'p2_t1_e',    'p3_t1_s'],
+  ['p1_c1_e',    'p2_c1_s',    'p2_c1_e',    'p3_c1_s'],
+  ['p1_a1_e',    'p2_a1_s',    'p2_a1_e',    'p3_a1_s'],
+  // CH2 (manual traffic)
+  ['p1_t2_e',    'p2_t2_s',    'p2_t2_e',    'p3_t2_s'],
+  ['p1_cost2_e', 'p2_cost2_s', 'p2_cost2_e', 'p3_cost2_s'],
+  ['p1_c2_e',    'p2_c2_s',    'p2_c2_e',    'p3_c2_s'],
+  ['p1_a2_e',    'p2_a2_s',    'p2_a2_e',    'p3_a2_s'],
+  // CH3
+  ['p1_t3_e',    'p2_t3_s',    'p2_t3_e',    'p3_t3_s'],
+  ['p1_cost3_e', 'p2_cost3_s', 'p2_cost3_e', 'p3_cost3_s'],
+  ['p1_c3_e',    'p2_c3_s',    'p2_c3_e',    'p3_c3_s'],
+  ['p1_a3_e',    'p2_a3_s',    'p2_a3_e',    'p3_a3_s'],
+  // CPC/CPM variants (CH2)
+  ['p1_cost2cpc_e', 'p2_cost2_s', 'p2_cost2_e', 'p3_cost2_s'],
+  ['p1_cost2cpm_e', 'p2_cost2_s', 'p2_cost2_e', 'p3_cost2_s'],
+];
+
+function propagatePhases() {
+  PHASE_LINKS.forEach(([p1e, p2s, p2e, p3s]) => {
+    const el1e = document.getElementById(p1e);
+    const el2s = document.getElementById(p2s);
+    const el2e = document.getElementById(p2e);
+    const el3s = document.getElementById(p3s);
+    // P1終了 → P2開始
+    if (el1e && el2s) {
+      el2s.value = el1e.value;
+    }
+    // P2終了 → P3開始
+    if (el2e && el3s) {
+      el3s.value = el2e.value;
+    }
+  });
+}
+
+// P1の終了フィールドが変わったらP2開始を更新
+// P2の終了フィールドが変わったらP3開始を更新
+function bindPropagation() {
+  PHASE_LINKS.forEach(([p1e, p2s, p2e, p3s]) => {
+    const el1e = document.getElementById(p1e);
+    const el2e = document.getElementById(p2e);
+    if (el1e) {
+      el1e.addEventListener('input',  () => { propagatePhases(); calcAll(); });
+      el1e.addEventListener('blur',   () => { propagatePhases(); formatComma(el1e); calcAll(); });
+    }
+    if (el2e) {
+      el2e.addEventListener('input',  () => { propagatePhases(); calcAll(); });
+      el2e.addEventListener('blur',   () => { propagatePhases(); formatComma(el2e); calcAll(); });
+    }
+  });
+}
+
+(function() {
+function init() {
+  document.getElementById('previewBtn')?.addEventListener('click', openReport);
+  bindPropagation();
+  // 初期表示：担当に応じてコストブロック表示
+  [1,2,3,4].forEach(ch => {
+    const block = document.getElementById('ch'+ch+'_cost_block');
+    if(block) block.style.display = chOwner[ch]==='hy' ? 'block' : 'none';
+    const badge = document.getElementById('ch'+ch+'_badge');
+    if(badge){
+      badge.textContent = chOwner[ch]==='cl' ? 'クライアント継続' : '飛躍担当';
+      badge.className = 'owner-badge '+(chOwner[ch]==='cl'?'badge-cl':'badge-hy');
+    }
+  });
+
+// readonly fi-wrap に is-auto クラスを付与
+document.querySelectorAll('.fi[readonly]').forEach(el => {
+  el.closest('.fi-wrap')?.classList.add('is-auto');
+});
+  // フェーズ間引き継ぎ（is-auto付与後に実行）
+  propagatePhases();
+  // 初期値を引き継ぎ
+  document.querySelectorAll('.fi:not([readonly])').forEach(el => formatComma(el));
+  setGrowthRate(document.getElementById('base_growth')?.value || '0.8');
+
+  try { calcAll(); } catch(e) { console.error('calcAll失敗:', e); }
+}
+if(document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+})();
+</script>
+</body>
+</html>

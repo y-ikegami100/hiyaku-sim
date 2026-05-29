@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>HIYAKU レポート</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#2C913C;--green-d:#1E6B2C;--green-l:#EBF5ED;--black:#000;--white:#fff;--gray:#888884;--border:#E0E0DC;}
+body{background:#ccc;font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;}
+.rp{width:210mm;min-height:297mm;background:#fff;margin:8mm auto;page-break-after:always;break-after:page;display:flex;flex-direction:column;}
+.rp:last-child{page-break-after:avoid}
+.rp-hd{background:#000;color:#fff;padding:8mm 12mm 6mm;display:flex;align-items:flex-end;justify-content:space-between;}
+.rp-hd-meta{text-align:right}.rp-hd-title{font-size:11pt;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.04em}
+.rp-pg{font-size:9pt;color:rgba(255,255,255,.4);margin-top:1mm}
+.rp-acc{height:3px;background:var(--green)}.rp-bd{flex:1;padding:8mm 12mm;font-size:9pt}
+.rp-footer{display:flex;align-items:center;gap:8mm;padding:3mm 12mm;border-top:1px solid var(--border);font-size:7.5pt;color:var(--gray)}
+.fp-bar{width:20mm;height:2px;background:var(--green)}.fc{flex:1}
+.sec-t{font-size:10pt;font-weight:700;color:var(--green-d);border-left:3px solid var(--green);padding-left:3mm;margin:5mm 0 3mm}
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-bottom:5mm}
+.kc{border:1px solid var(--border);border-top:2px solid var(--green);padding:3mm}
+.kl{font-size:7.5pt;color:var(--gray);margin-bottom:1.5mm}.kv{font-size:13pt;font-weight:900;font-family:monospace;color:#000}.kv.green{color:var(--green-d)}
+.divider{border:none;border-top:1px solid var(--border);margin:4mm 0}
+.tbl{width:100%;border-collapse:collapse;font-size:8pt;margin-bottom:4mm}
+.tbl th,.tbl td{padding:2mm 2.5mm;border:1px solid var(--border);text-align:right}
+.tbl th{background:#F0F0EE;font-weight:700}.tbl td:first-child{text-align:left;font-weight:600}
+.tbl tr:nth-child(even){background:#F9F9F7}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-bottom:5mm}
+.diff-card{text-align:center;padding:5mm 4mm;border:1px solid var(--border)}
+.diff-card.g{border-top:3px solid var(--green)}.diff-card.b{border-top:3px solid #000}.diff-card.d{border-top:3px solid #444}
+.diff-label{font-size:7pt;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2mm}
+.diff-val{font-size:20pt;font-weight:900;font-family:monospace;line-height:1.1;margin-bottom:1mm}
+.diff-sub{font-size:7.5pt;color:var(--gray)}.diff-pct{font-size:9pt;font-weight:700;color:var(--green-d);margin-top:1mm}
+.yr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-bottom:5mm}
+.yr-card{border:1px solid var(--border);padding:4mm}.yr-tag{font-size:7.5pt;font-weight:700;text-transform:uppercase;margin-bottom:3mm}
+.yr-rev{font-size:18pt;font-weight:900;font-family:monospace;margin-bottom:1mm}.yr-sub{font-size:7.5pt;color:var(--gray)}
+.chart-wrap{position:relative;width:100%;height:55mm;margin:3mm 0}.chart-wrap.tall{height:65mm}
+.cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
+.cost-box{border:1px solid var(--border);padding:4mm}
+.cost-title{font-size:8.5pt;font-weight:700;color:var(--green-d);border-bottom:2px solid var(--green);padding-bottom:2mm;margin-bottom:2mm}
+.cost-row{display:flex;justify-content:space-between;font-size:8pt;padding:1.5mm 0;border-bottom:1px solid #f5f5f3}
+.cost-val{font-family:monospace;font-weight:600}
+.cover{background:#000;color:#fff;min-height:297mm;display:flex;flex-direction:column;width:210mm;margin:8mm auto;page-break-after:always}
+.cover-body{flex:1;padding:20mm 18mm;display:flex;flex-direction:column;justify-content:center}
+.cover-eye{font-size:11pt;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:8mm}
+.cover-title{font-size:32pt;font-weight:900;line-height:1.15;margin-bottom:4mm}.cover-title span{color:var(--green)}
+.cover-sub{font-size:11pt;color:rgba(255,255,255,.6);margin-bottom:8mm}
+.cover-impact{display:grid;grid-template-columns:repeat(3,1fr);gap:6mm;border-top:1px solid rgba(44,145,60,.3);padding-top:6mm;margin-bottom:8mm}
+.ci-label{font-size:7pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:2mm}
+.ci-val{font-size:18pt;font-weight:900;color:#B8FF3F;font-family:monospace}
+.cover-meta{display:flex;gap:12mm}.cm-label{font-size:8pt;color:rgba(255,255,255,.4);margin-bottom:1mm}.cm-val{font-size:11pt;font-weight:700}
+.cover-footer{display:flex;align-items:center;justify-content:space-between;padding:5mm 18mm;border-top:1px solid rgba(255,255,255,.15)}
+.print-btn{position:fixed;bottom:20px;right:20px;background:var(--green);color:#fff;border:none;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+@media print{body{background:#fff}.print-btn{display:none}}
+.rp-logo{content:url("data:image/avif;base64,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" alt="HIYAKU" style="height:32px;display:block;"></div>
+    <div class="hdiv"></div>
+    <span class="htitle">3ヶ年 売上成長シミュレーター</span>
+  </div>
+  <div class="hdr-r">
+    <span class="hbadge">EC成長支援</span>
+    <button class="pdf-btn" id="previewBtn" onclick="openPreview()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      レポートプレビュー
+    </button>
+  </div>
+</header>
+
+<div class="main">
+  <div class="page-header">
+    <h1 class="page-title">3ヶ年 <span>成長シミュレーション</span></h1>
+    <p class="page-sub">チャネル別流入 → 転換・リピート → コスト → 損益まで一気通貫で試算。フェーズ別（成長期/安定期/拡大期）に各KPIを設定し、36ヶ月の成長モデルを構築します。</p>
+  </div>
+
+  <div class="sec">目標設定</div>
+  <div class="grid-2 mb15">
+    <div class="card">
+      <div class="card-title">月商・売上目標</div>
+      <div class="fr"><span class="fl">目標月商</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2000000" id="g_rev"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">達成目標月</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="36" id="g_month"><span class="fu">ヶ月目</span></div></div>
+      <div class="sdiv">ROI基準</div>
+      <div class="fr"><span class="fl">現状月商（施策前）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300000" id="g_base_rev"><span class="fu">円</span></div></div>
+      <p class="hint">HIYAKUがなくても継続する月商の見込み。この値を起点に粗利増分を算出し、より正確な投資対効果を計算します。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">クライアント情報</div>
+      <div class="fr"><span class="fl">目標LTV（36ヶ月）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="30000" id="g_ltv"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">クライアント社名</span><input type="text" id="client_name" value="○○株式会社" style="font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:13px;font-weight:500;border:none;border-bottom:2px solid var(--border);background:transparent;outline:none;flex:1;padding:4px;transition:border-color .2s;" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='var(--border)'"></div>
+    </div>
+  </div>
+
+  <div class="sec">チャネル別 流入設定（フェーズ別）<span style="font-size:10px;font-weight:400;color:var(--gray-400);text-transform:none;letter-spacing:0;margin-left:4px">— 開始値 → 終了値で線形成長</span></div>
+  <div class="phase-tabs">
+    <button class="phase-tab active" onclick="showPhase('p1',this)">成長期 M1–12</button>
+    <button class="phase-tab" onclick="showPhase('p2',this)">安定期 M13–24</button>
+    <button class="phase-tab" onclick="showPhase('p3',this)">拡大期 M25–36</button>
+  </div>
+
+  <!-- Phase 1 -->
+  <div id="phase_p1" class="mb15">
+    <div class="grid-3">
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH1</span><input class="cn-input" type="text" id="ch_name_1" value="オーガニック" maxlength="20"></div>
+        <div class="phase-label ph-growth">成長期 M1→M12</div><div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="200" id="p1_t1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="800" id="p1_t1_e"><span class="fu">人</span></div></div><div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="p1_c1_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.8" id="p1_c1_e" step="0.1"><span class="fu">%</span></div></div><div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="p1_a1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5500" id="p1_a1_e"><span class="fu">円</span></div></div>
+        <div class="cs"><div class="cs-kpi"><div class="cs-label">1M獲得</div><div class="cs-val" id="cs_p1_n1s">—</div></div><div class="cs-kpi"><div class="cs-label">12M獲得</div><div class="cs-val" id="cs_p1_n1e">—</div></div><div class="cs-kpi"><div class="cs-label">CAC</div><div class="cs-val">—</div></div></div>
+      </div>
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH2</span><input class="cn-input" type="text" id="ch_name_2" value="広告（Meta/Google）" maxlength="20"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;"><span style="font-size:11px;color:var(--gray-500)">課金タイプ</span><div class="seg"><button class="seg-btn active" id="ch2_manual_btn" onclick="setMode(2,'manual')">手動</button><button class="seg-btn" id="ch2_cpc_btn" onclick="setMode(2,'cpc')">CPC</button><button class="seg-btn" id="ch2_cpm_btn" onclick="setMode(2,'cpm')">CPM</button></div></div>
+        <div id="ch2_manual">
+          <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="200" id="p1_t2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="600" id="p1_t2_e"><span class="fu">人</span></div></div>
+          <div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="p1_cost2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="p1_cost2_e"><span class="fu">円</span></div></div>
+        </div>
+        <div id="ch2_cpc" class="hidden">
+          <div class="fr"><span class="fl">CPC（円）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100" id="p1_cpc2"><span class="fu">円</span></div></div>
+          <div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="p1_cost2cpc_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="p1_cost2cpc_e"><span class="fu">円</span></div></div>
+          <div class="calc-hint">流入数 → <span id="calc2_cpc_s">500人</span> → <span id="calc2_cpc_e">1,500人</span></div>
+        </div>
+        <div id="ch2_cpm" class="hidden">
+          <div class="fr"><span class="fl">CPM（円）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="800" id="p1_cpm2"><span class="fu">円</span></div></div>
+          <div class="fr"><span class="fl">CTR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.0" id="p1_ctr2" step="0.1"><span class="fu">%</span></div></div>
+          <div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="p1_cost2cpm_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="p1_cost2cpm_e"><span class="fu">円</span></div></div>
+          <div class="calc-hint">流入数 → <span id="calc2_cpm_s">125人</span> → <span id="calc2_cpm_e">375人</span></div>
+        </div>
+        <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.5" id="p1_c2_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.5" id="p1_c2_e" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4500" id="p1_a2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="p1_a2_e"><span class="fu">円</span></div></div>
+        <div class="cs"><div class="cs-kpi"><div class="cs-label">1M獲得</div><div class="cs-val" id="cs_p1_n2s">—</div></div><div class="cs-kpi"><div class="cs-label">12M獲得</div><div class="cs-val" id="cs_p1_n2e">—</div></div><div class="cs-kpi"><div class="cs-label">1M CAC</div><div class="cs-val" id="cs_p1_cac2">—</div></div></div>
+      </div>
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH3</span><input class="cn-input" type="text" id="ch_name_3" value="SNS / インフルエンサー" maxlength="20"></div>
+        <div class="phase-label ph-growth">成長期 M1→M12</div><div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100" id="p1_t3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300" id="p1_t3_e"><span class="fu">人</span></div></div><div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="p1_cost3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="p1_cost3_e"><span class="fu">円</span></div></div><div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="p1_c3_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.0" id="p1_c3_e" step="0.1"><span class="fu">%</span></div></div><div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="p1_a3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5500" id="p1_a3_e"><span class="fu">円</span></div></div>
+        <div class="cs"><div class="cs-kpi"><div class="cs-label">1M獲得</div><div class="cs-val" id="cs_p1_n3s">—</div></div><div class="cs-kpi"><div class="cs-label">12M獲得</div><div class="cs-val" id="cs_p1_n3e">—</div></div><div class="cs-kpi"><div class="cs-label">1M CAC</div><div class="cs-val" id="cs_p1_cac3">—</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 2 -->
+  <div id="phase_p2" class="hidden mb15">
+    <div class="grid-3">
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH1</span><span style="font-size:12px;font-weight:600" id="ph2_ch1_name">オーガニック</span></div>
+        <div class="phase-label ph-stable">安定期 M13→M24</div><div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="900" id="p2_t1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1500" id="p2_t1_e"><span class="fu">人</span></div></div><div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.0" id="p2_c1_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.5" id="p2_c1_e" step="0.1"><span class="fu">%</span></div></div><div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="5500" id="p2_a1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6000" id="p2_a1_e"><span class="fu">円</span></div></div>
+      </div>
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH2</span><span style="font-size:12px;font-weight:600" id="ph2_ch2_name">広告</span></div>
+        <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="700" id="p2_t2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1200" id="p2_t2_e"><span class="fu">人</span></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="160000" id="p2_cost2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="250000" id="p2_cost2_e"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.5" id="p2_c2_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.0" id="p2_c2_e" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="5000" id="p2_a2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5500" id="p2_a2_e"><span class="fu">円</span></div></div>
+      </div>
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH3</span><span style="font-size:12px;font-weight:600" id="ph2_ch3_name">SNS</span></div>
+        <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="350" id="p2_t3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="600" id="p2_t3_e"><span class="fu">人</span></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="50000" id="p2_cost3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100000" id="p2_cost3_e"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.0" id="p2_c3_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.5" id="p2_c3_e" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="5500" id="p2_a3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6000" id="p2_a3_e"><span class="fu">円</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 3 -->
+  <div id="phase_p3" class="hidden mb15">
+    <div class="grid-3">
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH1</span><span style="font-size:12px;font-weight:600" id="ph3_ch1_name">オーガニック</span></div>
+        <div class="phase-label ph-expand">拡大期 M25→M36</div><div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="1600" id="p3_t1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3000" id="p3_t1_e"><span class="fu">人</span></div></div><div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.5" id="p3_c1_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.2" id="p3_c1_e" step="0.1"><span class="fu">%</span></div></div><div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="6000" id="p3_a1_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="7000" id="p3_a1_e"><span class="fu">円</span></div></div>
+      </div>
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH2</span><span style="font-size:12px;font-weight:600" id="ph3_ch2_name">広告</span></div>
+        <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="1300" id="p3_t2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2500" id="p3_t2_e"><span class="fu">人</span></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="260000" id="p3_cost2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="500000" id="p3_cost2_e"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="3.0" id="p3_c2_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.5" id="p3_c2_e" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="5500" id="p3_a2_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="6500" id="p3_a2_e"><span class="fu">円</span></div></div>
+      </div>
+      <div class="card ch-card">
+        <div class="cn-row"><span class="cn-label">CH3</span><span style="font-size:12px;font-weight:600" id="ph3_ch3_name">SNS</span></div>
+        <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="650" id="p3_t3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1200" id="p3_t3_e"><span class="fu">人</span></div></div>
+        <div class="fr"><span class="fl">月間広告費</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="100000" id="p3_cost3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="200000" id="p3_cost3_e"><span class="fu">円</span></div></div>
+        <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="2.5" id="p3_c3_s" step="0.1"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.0" id="p3_c3_e" step="0.1"><span class="fu">%</span></div></div>
+        <div class="fr"><span class="fl">AOV（客単価）</span><div class="fi-wrap"><input readonly class="fi" type="text" inputmode="numeric" value="6000" id="p3_a3_s"><span class="fu">→</span></div><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="7000" id="p3_a3_e"><span class="fu">円</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">転換・リピート設定</div>
+  <div class="grid-3 mb15">
+    <div class="card">
+      <div class="card-title">F2 / F3 転換</div>
+      <div class="fr"><span class="fl">F2転換率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="30" id="s_f2"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">F2購入時 割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="s_df2"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">F3転換率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="22" id="s_f3"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">再購入サイクル</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="62" id="s_cycle"><span class="fu">日</span></div></div>
+      <div class="sdiv">初回割引</div>
+      <div class="fr"><span class="fl">初回購入 割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="s_dfirst"><span class="fu">%</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">月次リピート率</div>
+      <div class="fr"><span class="fl">月次リピート率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="10" id="s_repeat"><span class="fu">%</span></div></div>
+      <p class="hint">既存顧客プール全体から毎月この割合が再購入。F2/F3転換とは独立。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">サブスク設定</div>
+      <div class="fr"><span class="fl">サブスク転換率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="30" id="s_sub"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">サブスク割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="10" id="s_subdisc"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">月次解約率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5" id="s_churn"><span class="fu">%</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">セール・原価設定</div>
+  <div class="grid-2 mb15">
+    <div class="card">
+      <div class="card-title">定期セール</div>
+      <div class="fr"><span class="fl">セール割引率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="15" id="s_sale_disc"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">年間セール回数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4" id="s_sale_n"><span class="fu">回/年</span></div></div>
+      <p class="hint">セール月は全購入者のAOVに一律適用。均等間隔で自動配置。</p>
+    </div>
+    <div class="card">
+      <div class="card-title">原価設定</div>
+      <div class="fr"><span class="fl">原価率（仕入れ）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="30" id="s_cogs"><span class="fu">%</span></div></div>
+      <p class="hint">粗利 = 売上 × (1 − 原価率)</p>
+    </div>
+  </div>
+
+  <div class="sec">販管費 — クライアント側</div>
+  <div class="grid-2 mb15">
+    <div class="card">
+      <div class="card-title">固定販管費（月額）</div>
+      <div class="fr"><span class="fl">人件費・家賃 等</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300000" id="cl_opex_fixed"><span class="fu">円/月</span></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">変動販管費（売上連動）</div>
+      <div class="fr"><span class="fl">物流・梱包 等</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5" id="cl_opex_var" step="0.1"><span class="fu">%</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">業務委託費 — 株式会社飛躍</div>
+  <div class="grid-3 mb15">
+    <div class="card hiyaku-card">
+      <div class="card-title">初期費用</div>
+      <div class="fr"><span class="fl">セットアップ費用</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="300000" id="hy_initial"><span class="fu">円</span></div></div>
+      <p class="hint">1ヶ月目のみ計上。</p>
+    </div>
+    <div class="card hiyaku-card">
+      <div class="card-title">月額固定費</div>
+      <div class="fr"><span class="fl">月額運用費</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="150000" id="hy_monthly"><span class="fu">円/月</span></div></div>
+    </div>
+    <div class="card hiyaku-card">
+      <div class="card-title">成果報酬 Fee</div>
+      <div class="fr"><span class="fl">月商に対する報酬率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3" id="hy_fee_rate" step="0.1"><span class="fu">%</span></div></div>
+      <p class="hint">月商 × 報酬率。0%なら成果報酬なし。</p>
+    </div>
+  </div>
+
+  <div class="sec">現状値（飛躍なし シナリオ）<span style="font-size:10px;font-weight:400;color:var(--gray-400);text-transform:none;letter-spacing:0;margin-left:4px">— HIYAKUなしで低成長継続した場合の想定</span></div>
+  <p class="hint" style="margin-bottom:12px">現在の流入数・CVR・AOVを入力してください。自然成長率を加味した「現状継続シナリオ」で36ヶ月を試算し、飛躍ありとの差分を算出します。</p>
+  <div class="card mb15" style="border-top:3px solid var(--gray-400);padding:.875rem 1.25rem">
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+      <span style="font-size:13px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em">自然成長率（月次）</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0.8" id="base_growth" step="0.1" style="width:80px"><span class="fu">%/月</span></div>
+        <span style="font-size:13px;color:var(--gray-400)">流入数・CVR・AOVが毎月この割合で自然成長すると想定</span>
+      </div>
+      <div style="display:flex;gap:6px;margin-left:auto">
+        <button class="seg-btn" style="font-size:12px;padding:3px 10px;border:1px solid var(--border);background:var(--gray-100);color:var(--gray-500);cursor:pointer;border-radius:0" onclick="document.getElementById('base_growth').value='0';calcAll()">0%（固定）</button>
+        <button class="seg-btn" style="font-size:12px;padding:3px 10px;border:1px solid var(--border);background:var(--gray-100);color:var(--gray-500);cursor:pointer;border-radius:0" onclick="document.getElementById('base_growth').value='0.5';calcAll()">低成長 0.5%</button>
+        <button class="seg-btn" style="font-size:12px;padding:3px 10px;border:1px solid var(--border);background:var(--green);color:var(--white);cursor:pointer;border-radius:0" onclick="document.getElementById('base_growth').value='0.8';calcAll()">標準 0.8%</button>
+        <button class="seg-btn" style="font-size:12px;padding:3px 10px;border:1px solid var(--border);background:var(--gray-100);color:var(--gray-500);cursor:pointer;border-radius:0" onclick="document.getElementById('base_growth').value='1.5';calcAll()">高成長 1.5%</button>
+      </div>
+    </div>
+  </div>
+  <div class="grid-3 mb15">
+    <div class="card" style="border-top:3px solid var(--gray-400)">
+      <div class="card-title">CH1 現状値</div>
+      <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="200" id="base_t1"><span class="fu">人</span></div></div>
+      <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="base_c1"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="base_a1"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">広告費（月）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="base_cost1"><span class="fu">円</span></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gray-400)">
+      <div class="card-title">CH2 現状値</div>
+      <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="200" id="base_t2"><span class="fu">人</span></div></div>
+      <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.5" id="base_c2"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4500" id="base_a2"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">広告費（月）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="50000" id="base_cost2"><span class="fu">円</span></div></div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--gray-400)">
+      <div class="card-title">CH3 現状値</div>
+      <div class="fr"><span class="fl">月間流入数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="100" id="base_t3"><span class="fu">人</span></div></div>
+      <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1.0" id="base_c3"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="base_a3"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">広告費（月）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="0" id="base_cost3"><span class="fu">円</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">CRM設定（LINE / メルマガ）</div>
+  <div class="grid-2 mb15">
+    <div class="card crm-card">
+      <div class="card-title">CRM基本設定</div>
+      <div class="fr"><span class="fl">ツール月額費用</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="crm_cost"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">フォロワー数（現在）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="1000" id="crm_followers"><span class="fu">人</span></div></div>
+      <div class="fr"><span class="fl">月間新規登録率</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="2.0" id="crm_reg" step="0.1"><span class="fu">%</span></div></div>
+      <div class="sdiv">CRMリスト概算</div>
+      <div style="display:flex;gap:.75rem;margin-top:4px">
+        <div class="cs-kpi"><div class="cs-label">現在のリスト</div><div class="cs-val" id="crm_list_now">—</div></div>
+        <div class="cs-kpi"><div class="cs-label">36ヶ月後</div><div class="cs-val" id="crm_list_36m">—</div></div>
+      </div>
+    </div>
+    <div class="card crm-card">
+      <div class="card-title">配信・購買設定</div>
+      <div class="fr"><span class="fl">CTR（流入率）</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5.0" id="crm_ctr" step="0.1"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">CVR</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="3.0" id="crm_cvr" step="0.1"><span class="fu">%</span></div></div>
+      <div class="fr"><span class="fl">AOV</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="5000" id="crm_aov"><span class="fu">円</span></div></div>
+      <div class="fr"><span class="fl">月間配信回数</span><div class="fi-wrap"><input class="fi" type="text" inputmode="numeric" value="4" id="crm_freq"><span class="fu">回/月</span></div></div>
+    </div>
+  </div>
+
+  <div class="sec">年次サマリー</div>
+  <div class="year-strip mb15">
+    <div class="yr-card y1"><div class="yr-label">Year 1（M1–12）成長期</div><div class="yr-val" id="y1_rev">—</div><div class="yr-sub">年間売上合計</div><div class="yr-kpis"><div class="yr-kpi">粗利 <span id="y1_gross">—</span></div><div class="yr-kpi">CL営業利益 <span id="y1_op">—</span></div><div class="yr-kpi">実質利益 <span id="y1_real">—</span></div></div></div>
+    <div class="yr-card y2"><div class="yr-label">Year 2（M13–24）安定期</div><div class="yr-val" id="y2_rev">—</div><div class="yr-sub">年間売上合計</div><div class="yr-kpis"><div class="yr-kpi">粗利 <span id="y2_gross">—</span></div><div class="yr-kpi">CL営業利益 <span id="y2_op">—</span></div><div class="yr-kpi">実質利益 <span id="y2_real">—</span></div></div></div>
+    <div class="yr-card y3"><div class="yr-label">Year 3（M25–36）拡大期</div><div class="yr-val" id="y3_rev">—</div><div class="yr-sub">年間売上合計</div><div class="yr-kpis"><div class="yr-kpi">粗利 <span id="y3_gross">—</span></div><div class="yr-kpi">CL営業利益 <span id="y3_op">—</span></div><div class="yr-kpi">実質利益 <span id="y3_real">—</span></div></div></div>
+  </div>
+
+  <div class="sec">KPIサマリー（36ヶ月累計）</div>
+  <!-- 飛躍なし vs あり 比較パネル -->
+  <div class="card mb15" style="border-top:3px solid var(--black)">
+    <div class="card-title">飛躍なし vs 飛躍あり — 36ヶ月 比較</div>
+    <div style="overflow-x:auto">
+      <table style="font-size:13px">
+        <thead><tr>
+          <th style="width:200px">指標</th>
+          <th style="text-align:right;color:var(--gray-400)">飛躍なし</th>
+          <th style="text-align:right;color:var(--green-d)">飛躍あり</th>
+          <th style="text-align:right;color:var(--black)">差分</th>
+          <th style="text-align:right;color:var(--black)">増加率</th>
+        </tr></thead>
+        <tbody>
+          <tr><td>36M 累計売上</td><td style="text-align:right;font-family:monospace" id="cmp_rev_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_rev_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_rev_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_rev_pct">—</td></tr>
+          <tr><td>36M 累計粗利</td><td style="text-align:right;font-family:monospace" id="cmp_gross_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_gross_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_gross_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_gross_pct">—</td></tr>
+          <tr><td>36M 累計営業利益</td><td style="text-align:right;font-family:monospace" id="cmp_op_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_op_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_op_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_op_pct">—</td></tr>
+          <tr><td>月間新規顧客数（最終月）</td><td style="text-align:right;font-family:monospace" id="cmp_cust_base">—</td><td style="text-align:right;font-family:monospace;color:var(--green-d)" id="cmp_cust_with">—</td><td style="text-align:right;font-family:monospace;font-weight:700" id="cmp_cust_diff">—</td><td style="text-align:right;font-family:monospace" id="cmp_cust_pct">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="dual-hero mb15">
+    <div class="hero-panel client-panel">
+      <div class="hero-panel-title">クライアント損益（HIYAKU費用控除前）</div>
+      <div class="hero-row">
+        <div class="hero-item"><div class="hero-label">目標月の月商</div><div class="hero-val" id="m_rev">—</div><div class="hero-sub" id="m_rev_goal"></div><div class="pbg"><div class="pb" id="pb_rev" style="width:0%"></div></div><div style="margin-top:7px" id="m_rev_badge"></div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">36M 累計粗利</div><div class="hero-val" id="m_gross">—</div><div class="hero-sub">売上 − 原価</div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">36M 累計営業利益</div><div class="hero-val" id="m_op">—</div><div class="hero-sub">粗利 − 広告 − 販管 − CRM</div></div>
+      </div>
+    </div>
+    <div class="hero-panel hiyaku-panel">
+      <div class="hero-panel-title">飛躍 業務委託費 / 実質利益</div>
+      <div class="hero-row">
+        <div class="hero-item"><div class="hero-label">HIYAKU費用（36M合計）</div><div class="hero-val" id="hy_total_cost">—</div><div class="hero-sub">初期 + 月額固定 + 成果報酬</div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">実質営業利益（36M）</div><div class="hero-val" id="m_real_op">—</div><div class="hero-sub">CL営業利益 − HIYAKU費用</div></div>
+        <div class="hero-divider"></div>
+        <div class="hero-item"><div class="hero-label">HIYAKU 投資対効果</div><div class="hero-val" id="hy_roi">—</div><div class="hero-sub">粗利増分（施策前比）÷ HIYAKU費用</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-4 mb15">
+    <div class="mc green-mc"><div class="mc-label">新規獲得 M1→M36</div><div class="mc-val" id="m_new">—</div><div class="mc-sub">全チャネル合算</div></div>
+    <div class="mc green-mc"><div class="mc-label">推定LTV（36ヶ月）</div><div class="mc-val" id="m_ltv">—</div><div class="mc-sub" id="m_ltv_sub">—</div></div>
+    <div class="mc black-mc"><div class="mc-label">サブスク顧客数（36M後）</div><div class="mc-val" id="m_subpool">—</div><div class="mc-sub">解約考慮済み</div></div>
+    <div class="mc black-mc"><div class="mc-label">成果報酬累計</div><div class="mc-val" id="hy_fee_total">—</div><div class="mc-sub">月商×報酬率の累計</div></div>
+  </div>
+
+  <div class="sec">グラフ（36ヶ月）</div>
+  <div class="card mb15">
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('revenue',this)">月商・損益</button>
+      <button class="tab-btn" onclick="switchTab('cohort',this)">顧客構成</button>
+      <button class="tab-btn" onclick="switchTab('cost',this)">コスト内訳</button>
+      <button class="tab-btn" onclick="switchTab('annual',this)">年次比較</button>
+      <button class="tab-btn" onclick="switchTab('compare',this)">飛躍なし比較</button>
+    </div>
+    <div id="tab_revenue"><div style="position:relative;width:100%;height:300px"><canvas id="chartRevenue"></canvas></div></div>
+    <div id="tab_cohort" style="display:none"><div style="position:relative;width:100%;height:300px"><canvas id="chartCohort"></canvas></div></div>
+    <div id="tab_cost" style="display:none"><div style="position:relative;width:100%;height:300px"><canvas id="chartCost"></canvas></div></div>
+    <div id="tab_annual" style="display:none"><div style="position:relative;width:100%;height:300px"><canvas id="chartAnnual"></canvas></div></div>
+    <div id="tab_compare" style="display:none">
+      <div class="legend">
+        <span class="li"><span class="ld" style="background:var(--gray-400)"></span>飛躍なし</span>
+        <span class="li"><span class="ld" style="background:var(--green)"></span>飛躍あり</span>
+      </div>
+      <div style="position:relative;width:100%;height:300px"><canvas id="chartCompare"></canvas></div>
+    </div>
+  </div>
+
+  <div class="sec">月次詳細（36ヶ月）</div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>月</th><th>新規</th><th>月商</th><th>広告費</th><th>粗利</th><th>CL販管費</th><th>CL営業利益</th><th>HY費用</th><th>実質利益</th></tr></thead>
+        <tbody id="tbl_body"></tbody>
+      </table>
+    </div>
+    <p class="note">※ CL販管費=固定費+変動費(売上×変動率)。HY費用=HIYAKU初期費用(M1のみ)+月額固定+成果報酬。実質利益=CL営業利益−CRM費−HY費用。</p>
+  </div>
+</div>
+
+<div id="report">
+<!-- 戻るバー（画面のみ表示・印刷時非表示） -->
+<div id="report-bar" style="
+  position:sticky;top:0;z-index:300;
+  background:#000;color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 28px;
+  box-shadow:0 2px 12px rgba(0,0,0,.3);
+">
+  <div style="display:flex;align-items:center;gap:16px;">
+    <button onclick="closePreview()" style="
+      font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:12px;font-weight:600;
+      padding:7px 16px;border-radius:0;border:1px solid rgba(255,255,255,.25);
+      background:transparent;color:#fff;cursor:pointer;
+      display:flex;align-items:center;gap:6px;transition:all .2s;
+    " onmouseover="this.style.background='rgba(255,255,255,.12)'" onmouseout="this.style.background='transparent'">
+      ← 編集に戻る
+    </button>
+    <span style="font-size:11px;color:rgba(255,255,255,.45);">プレビューモード</span>
+  </div>
+  <button onclick="window.print()" style="
+    font-family:'游ゴシック体','Yu Gothic',YuGothic,'ヒラギノ角ゴ ProN',sans-serif;font-size:12px;font-weight:700;
+    padding:8px 20px;border-radius:0;border:none;
+    background:#2C913C;color:#fff;cursor:pointer;
+    display:flex;align-items:center;gap:7px;transition:all .2s;
+  " onmouseover="this.style.background='#1E6B2C'" onmouseout="this.style.background='#2C913C'">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    印刷 / PDF保存（Ctrl+P）
+  </button>
+</div>
+
+<!-- ─ P1: 表紙 ─────────────────────────────── -->
+<div class="rp rp-cover">
+  <div class="rp-cover-body">
+    <div class="rp-cover-eyebrow">Business Proposal</div>
+    <div class="rp-cover-title">3ヶ年<br><span>EC成長シミュレーション</span></div>
+    <div class="rp-cover-sub" id="rp_cover_sub">売上成長戦略・ユニットエコノミクス分析レポート</div>
+    <!-- 表紙インパクト数値 -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6mm;margin:8mm 0 0;border-top:1px solid rgba(44,145,60,0.3);padding-top:6mm">
+      <div style="text-align:center">
+        <div style="font-size:7pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:2mm">36M 売上差分</div>
+        <div style="font-size:18pt;font-weight:900;color:#B8FF3F;font-family:monospace;line-height:1" id="rp_cv_rev_diff">—</div>
+      </div>
+      <div style="text-align:center;border-left:1px solid rgba(255,255,255,0.15);border-right:1px solid rgba(255,255,255,0.15)">
+        <div style="font-size:7pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:2mm">36M 粗利差分</div>
+        <div style="font-size:18pt;font-weight:900;color:#B8FF3F;font-family:monospace;line-height:1" id="rp_cv_gross_diff">—</div>
+      </div>
+      <div style="text-align:center">
+        <div style="font-size:7pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:2mm">HIYAKU ROI</div>
+        <div style="font-size:18pt;font-weight:900;color:#B8FF3F;font-family:monospace;line-height:1" id="rp_cv_roi">—</div>
+      </div>
+    </div>
+    <div class="rp-cover-meta">
+      <div class="rp-cover-meta-item">
+        <div class="rp-cover-meta-label">提出先</div>
+        <div class="rp-cover-meta-val" id="rp_client_name">○○株式会社</div>
+      </div>
+      <div class="rp-cover-meta-item">
+        <div class="rp-cover-meta-label">作成日</div>
+        <div class="rp-cover-meta-val" id="rp_date">—</div>
+      </div>
+      <div class="rp-cover-meta-item">
+        <div class="rp-cover-meta-label">対象期間</div>
+        <div class="rp-cover-meta-val">36ヶ月（3ヶ年）</div>
+      </div>
+    </div>
+  </div>
+  <div class="rp-cover-footer">
+    <img src="data:image/avif;base64,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");height:24px;filter:brightness(0) invert(1);}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">📄 PDF保存</button>
+<div class="cover">
+  <div class="cover-body">
+    <div class="cover-eye">Business Proposal</div>
+    <div class="cover-title">3ヶ年<br><span>EC成長シミュレーション</span></div>
+    <div class="cover-sub">飛躍に依頼した場合 vs 依頼しなかった場合</div>
+    <div class="cover-impact">
+      <div><div class="ci-label">36M 売上差分</div><div class="ci-val" id="cv_rev">—</div></div>
+      <div style="border-left:1px solid rgba(255,255,255,.15);border-right:1px solid rgba(255,255,255,.15);padding:0 6mm"><div class="ci-label">36M 粗利差分</div><div class="ci-val" id="cv_gross">—</div></div>
+      <div><div class="ci-label">HIYAKU ROI</div><div class="ci-val" id="cv_roi">—</div></div>
+    </div>
+    <div class="cover-meta">
+      <div><div class="cm-label">提出先</div><div class="cm-val" id="cv_client">—</div></div>
+      <div><div class="cm-label">作成日</div><div class="cm-val" id="cv_date">—</div></div>
+    </div>
+  </div>
+  <div class="cover-footer">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div style="font-size:9pt;color:rgba(255,255,255,.4)">株式会社飛躍 — EC事業成長支援</div>
+  </div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">現状分析 — クライアントの今</div><div class="rp-pg">p.1</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd">
+<div class="sec-t">現状 & 目標</div>
+<div class="kgrid"><div class="kc"><div class="kl">現状月商</div><div class="kv" id="p1_base_rev">—</div></div><div class="kc"><div class="kl">目標月商</div><div class="kv green" id="p1_goal_rev">—</div></div><div class="kc"><div class="kl">達成目標</div><div class="kv" id="p1_goal_month">—</div></div><div class="kc"><div class="kl">自然成長率</div><div class="kv" id="p1_growth">—</div></div></div>
+<hr class="divider">
+<div class="sec-t">現状チャネル（飛躍なし基準値）</div>
+<table class="tbl"><thead><tr><th>CH</th><th>流入数/月</th><th>CVR</th><th>AOV</th><th>広告費/月</th></tr></thead><tbody>
+<tr><td id="cn1_p1">CH1</td><td id="bt1">—</td><td id="bc1">—</td><td id="ba1">—</td><td id="bcost1">—</td></tr>
+<tr><td id="cn2_p1">CH2</td><td id="bt2">—</td><td id="bc2">—</td><td id="ba2">—</td><td id="bcost2">—</td></tr>
+<tr><td id="cn3_p1">CH3</td><td id="bt3">—</td><td id="bc3">—</td><td id="ba3">—</td><td>—</td></tr>
+</tbody></table>
+<hr class="divider">
+<div class="sec-t">飛躍なしシナリオ — 36ヶ月累計</div>
+<div class="kgrid"><div class="kc"><div class="kl">累計売上</div><div class="kv" id="base_rev36">—</div></div><div class="kc"><div class="kl">累計粗利</div><div class="kv" id="base_gross36">—</div></div><div class="kc"><div class="kl">M36月商</div><div class="kv" id="base_rev_m36">—</div></div><div class="kc"><div class="kl">月間新規（M36）</div><div class="kv" id="base_new36">—</div></div></div>
+<div class="chart-wrap"><canvas id="rcBaseline"></canvas></div>
+</div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc1">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">飛躍の提案 — 成長期 M1→M12</div><div class="rp-pg">p.2</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd"><div class="sec-t">チャネル別 KPI目標（成長期）</div><table class="tbl"><thead><tr><th>CH</th><th colspan="3">流入数</th><th colspan="3">CVR</th><th colspan="3">AOV</th></tr></thead><tbody><tr><td id="cn1_p1">CH1</td><td id="p1t1s">—</td><td>→</td><td id="p1t1e">—</td><td id="p1c1s">—</td><td>→</td><td id="p1c1e">—</td><td id="p1a1s">—</td><td>→</td><td id="p1a1e">—</td></tr><tr><td id="cn2_p1">CH2</td><td id="p1t2s">—</td><td>→</td><td id="p1t2e">—</td><td id="p1c2s">—</td><td>→</td><td id="p1c2e">—</td><td id="p1a2s">—</td><td>→</td><td id="p1a2e">—</td></tr><tr><td id="cn3_p1">CH3</td><td id="p1t3s">—</td><td>→</td><td id="p1t3e">—</td><td id="p1c3s">—</td><td>→</td><td id="p1c3e">—</td><td id="p1a3s">—</td><td>→</td><td id="p1a3e">—</td></tr>
+<tr style="background:#f5f5f3"><td>CH4 CRM</td><td colspan="3">—</td><td id="p1crm_ctr">—</td><td>→</td><td></td><td id="p1crm_aov">—</td><td>→</td><td></td></tr>
+</tbody></table>
+<div class="kgrid" style="margin-top:4mm">
+<div class="kc"><div class="kl">P1 売上合計</div><div class="kv green" id="p1rev_t">—</div></div>
+<div class="kc"><div class="kl">P1 粗利合計</div><div class="kv" id="p1gross_t">—</div></div>
+<div class="kc"><div class="kl">M12 月商</div><div class="kv" id="p1rev_l">—</div></div>
+<div class="kc"><div class="kl">M12 新規</div><div class="kv" id="p1new_l">—</div></div>
+</div></div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc2">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">飛躍の提案 — 安定期 M13→M24</div><div class="rp-pg">p.3</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd"><div class="sec-t">チャネル別 KPI目標（安定期）</div><table class="tbl"><thead><tr><th>CH</th><th colspan="3">流入数</th><th colspan="3">CVR</th><th colspan="3">AOV</th></tr></thead><tbody><tr><td id="cn1_p2">CH1</td><td id="p2t1s">—</td><td>→</td><td id="p2t1e">—</td><td id="p2c1s">—</td><td>→</td><td id="p2c1e">—</td><td id="p2a1s">—</td><td>→</td><td id="p2a1e">—</td></tr><tr><td id="cn2_p2">CH2</td><td id="p2t2s">—</td><td>→</td><td id="p2t2e">—</td><td id="p2c2s">—</td><td>→</td><td id="p2c2e">—</td><td id="p2a2s">—</td><td>→</td><td id="p2a2e">—</td></tr><tr><td id="cn3_p2">CH3</td><td id="p2t3s">—</td><td>→</td><td id="p2t3e">—</td><td id="p2c3s">—</td><td>→</td><td id="p2c3e">—</td><td id="p2a3s">—</td><td>→</td><td id="p2a3e">—</td></tr>
+<tr style="background:#f5f5f3"><td>CH4 CRM</td><td colspan="3">—</td><td id="p2crm_ctr">—</td><td>→</td><td></td><td id="p2crm_aov">—</td><td>→</td><td></td></tr>
+</tbody></table>
+<div class="kgrid" style="margin-top:4mm">
+<div class="kc"><div class="kl">P2 売上合計</div><div class="kv green" id="p2rev_t">—</div></div>
+<div class="kc"><div class="kl">P2 粗利合計</div><div class="kv" id="p2gross_t">—</div></div>
+<div class="kc"><div class="kl">M24 月商</div><div class="kv" id="p2rev_l">—</div></div>
+<div class="kc"><div class="kl">M24 新規</div><div class="kv" id="p2new_l">—</div></div>
+</div></div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc3">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">飛躍の提案 — 拡大期 M25→M36</div><div class="rp-pg">p.4</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd"><div class="sec-t">チャネル別 KPI目標（拡大期）</div><table class="tbl"><thead><tr><th>CH</th><th colspan="3">流入数</th><th colspan="3">CVR</th><th colspan="3">AOV</th></tr></thead><tbody><tr><td id="cn1_p3">CH1</td><td id="p3t1s">—</td><td>→</td><td id="p3t1e">—</td><td id="p3c1s">—</td><td>→</td><td id="p3c1e">—</td><td id="p3a1s">—</td><td>→</td><td id="p3a1e">—</td></tr><tr><td id="cn2_p3">CH2</td><td id="p3t2s">—</td><td>→</td><td id="p3t2e">—</td><td id="p3c2s">—</td><td>→</td><td id="p3c2e">—</td><td id="p3a2s">—</td><td>→</td><td id="p3a2e">—</td></tr><tr><td id="cn3_p3">CH3</td><td id="p3t3s">—</td><td>→</td><td id="p3t3e">—</td><td id="p3c3s">—</td><td>→</td><td id="p3c3e">—</td><td id="p3a3s">—</td><td>→</td><td id="p3a3e">—</td></tr>
+<tr style="background:#f5f5f3"><td>CH4 CRM</td><td colspan="3">—</td><td id="p3crm_ctr">—</td><td>→</td><td></td><td id="p3crm_aov">—</td><td>→</td><td></td></tr>
+</tbody></table>
+<div class="kgrid" style="margin-top:4mm">
+<div class="kc"><div class="kl">P3 売上合計</div><div class="kv green" id="p3rev_t">—</div></div>
+<div class="kc"><div class="kl">P3 粗利合計</div><div class="kv" id="p3gross_t">—</div></div>
+<div class="kc"><div class="kl">M36 月商</div><div class="kv" id="p3rev_l">—</div></div>
+<div class="kc"><div class="kl">M36 新規</div><div class="kv" id="p3new_l">—</div></div>
+</div></div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc4">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">コスト設計</div><div class="rp-pg">p.5</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd">
+<div class="sec-t">リピート設計</div>
+<div class="kgrid"><div class="kc"><div class="kl">F2転換率</div><div class="kv" id="rp_f2">—</div></div><div class="kc"><div class="kl">F3転換率</div><div class="kv" id="rp_f3">—</div></div><div class="kc"><div class="kl">再購入サイクル</div><div class="kv" id="rp_cycle">—</div></div><div class="kc"><div class="kl">月次リピート率</div><div class="kv" id="rp_repeat">—</div></div></div>
+<hr class="divider">
+<div class="sec-t">セール・原価 / 販管費 / HIYAKU費用</div>
+<div class="cost-grid">
+  <div class="cost-box"><div class="cost-title">セール・原価</div>
+    <div class="cost-row"><span>原価率</span><span class="cost-val" id="rp_cogs">—</span></div>
+    <div class="cost-row"><span>セール割引率</span><span class="cost-val" id="rp_sale_disc">—</span></div>
+    <div class="cost-row"><span>年間セール回数</span><span class="cost-val" id="rp_sale_count">—</span></div>
+  </div>
+  <div class="cost-box"><div class="cost-title">販管費</div>
+    <div class="cost-row"><span>固定販管費</span><span class="cost-val" id="rp_cl_fixed">—</span></div>
+    <div class="cost-row"><span>変動販管費率</span><span class="cost-val" id="rp_cl_var">—</span></div>
+  </div>
+  <div class="cost-box"><div class="cost-title">HIYAKU費用</div>
+    <div class="cost-row"><span>初期費用</span><span class="cost-val" id="rp_hy_init">—</span></div>
+    <div class="cost-row"><span>月額固定（36M）</span><span class="cost-val" id="rp_hy_monthly">—</span></div>
+    <div class="cost-row"><span>成果報酬（36M）</span><span class="cost-val" id="rp_hy_fee">—</span></div>
+    <div class="cost-row" style="font-weight:700"><span>合計（36M）</span><span class="cost-val" style="color:var(--green-d)" id="rp_hy_total">—</span></div>
+  </div>
+</div>
+</div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc5">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">インパクトサマリー</div><div class="rp-pg">p.6</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd">
+<div class="sec-t">飛躍に依頼した場合 vs 依頼しなかった場合 — 36ヶ月</div>
+<div class="diff-grid">
+  <div class="diff-card g"><div class="diff-label">36M 売上差分</div><div class="diff-val" id="imp_rev_diff" style="color:var(--green-d)">—</div><div class="diff-sub">飛躍なし <span id="imp_rev_b">—</span> → <span id="imp_rev_w" style="color:var(--green-d)">—</span></div><div class="diff-pct" id="imp_rev_pct">—</div></div>
+  <div class="diff-card b"><div class="diff-label">36M 粗利差分</div><div class="diff-val" id="imp_gross_diff" style="color:#000">—</div><div class="diff-sub">飛躍なし <span id="imp_gross_b">—</span> → <span id="imp_gross_w" style="color:var(--green-d)">—</span></div><div class="diff-pct" id="imp_gross_pct">—</div></div>
+  <div class="diff-card d"><div class="diff-label">HIYAKU ROI</div><div class="diff-val" id="imp_roi" style="color:#444">—</div><div class="diff-sub">粗利増分 ÷ HIYAKU費用合計</div><div class="diff-pct" id="imp_hycost">—</div></div>
+</div>
+<div class="chart-wrap tall"><canvas id="rcImpact"></canvas></div>
+</div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc6">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">年次サマリー</div><div class="rp-pg">p.7</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd">
+<div class="sec-t">Year 1〜3 売上・粗利・営業利益</div>
+<div class="yr-grid">
+  <div class="yr-card" style="border-top:3px solid var(--green)"><div class="yr-tag" style="color:var(--green-d)">YEAR 1（M1–12）成長期</div><div class="yr-rev" id="y1_rev">—</div><div class="yr-sub" id="y1_sub">—</div></div>
+  <div class="yr-card" style="border-top:3px solid #444"><div class="yr-tag" style="color:#444">YEAR 2（M13–24）安定期</div><div class="yr-rev" id="y2_rev">—</div><div class="yr-sub" id="y2_sub">—</div></div>
+  <div class="yr-card" style="border-top:3px solid #C8A84B"><div class="yr-tag" style="color:#C8A84B">YEAR 3（M25–36）拡大期</div><div class="yr-rev" id="y3_rev">—</div><div class="yr-sub" id="y3_sub">—</div></div>
+</div>
+<div class="chart-wrap tall"><canvas id="rcAnnual"></canvas></div>
+</div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc7">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">KPIサマリー</div><div class="rp-pg">p.8</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd">
+<div class="sec-t">飛躍なし vs 飛躍あり — 36ヶ月累計</div>
+<table class="tbl" style="margin-bottom:4mm"><thead><tr><th style="text-align:left">指標</th><th>飛躍なし</th><th>飛躍あり</th><th>差分</th><th>増加率</th></tr></thead><tbody>
+<tr><td>36M 累計売上</td><td id="cmp_rev_b">—</td><td id="cmp_rev_w" style="color:var(--green-d)">—</td><td id="cmp_rev_d" style="font-weight:700">—</td><td id="cmp_rev_p">—</td></tr>
+<tr><td>36M 累計粗利</td><td id="cmp_gross_b">—</td><td id="cmp_gross_w" style="color:var(--green-d)">—</td><td id="cmp_gross_d" style="font-weight:700">—</td><td id="cmp_gross_p">—</td></tr>
+<tr><td>36M 累計営業利益</td><td id="cmp_op_b">—</td><td id="cmp_op_w" style="color:var(--green-d)">—</td><td id="cmp_op_d" style="font-weight:700">—</td><td>—</td></tr>
+<tr style="font-weight:700"><td>HIYAKU ROI</td><td>—</td><td id="cmp_roi" style="color:var(--green-d)">—</td><td colspan="2" style="font-size:7.5pt;font-weight:400;color:var(--gray)">粗利増分 ÷ HIYAKU費用合計</td></tr>
+<tr><td>月間新規（M36）</td><td id="cmp_cust_b">—</td><td id="cmp_cust_w" style="color:var(--green-d)">—</td><td id="cmp_cust_d" style="font-weight:700">—</td><td id="cmp_cust_p">—</td></tr>
+</tbody></table>
+<div class="chart-wrap"><canvas id="rcRevenue"></canvas></div>
+</div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc8">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">グラフ詳細</div><div class="rp-pg">p.9</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd">
+<div class="sec-t">顧客構成（月次）</div>
+<div class="chart-wrap"><canvas id="rcCohort"></canvas></div>
+<hr class="divider">
+<div class="sec-t">コスト内訳（月次）</div>
+<div class="chart-wrap"><canvas id="rcCost"></canvas></div>
+</div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc9">—</span><span>© 株式会社飛躍</span></div>
+</div>
+<div class="rp">
+  <div class="rp-hd">
+    <div><img class="rp-logo" alt="HIYAKU" style="height:24px;filter:brightness(0) invert(1)"></div>
+    <div class="rp-hd-meta"><div class="rp-hd-title">月次詳細</div><div class="rp-pg">p.10</div></div>
+  </div>
+  <div class="rp-acc"></div>
+  <div class="rp-bd">
+<div class="sec-t">36ヶ月 月次推移</div>
+<table class="tbl" style="font-size:7.5pt"><thead><tr>
+<th>月</th><th>新規</th><th>月商</th><th>粗利</th><th>広告費</th><th>CL営業利益</th><th>HY費用</th><th>実質利益</th>
+</tr></thead><tbody id="rp_tbl"></tbody></table>
+<p style="font-size:7pt;color:var(--gray);margin-top:2mm">※ HY費用=初期+月額+成果報酬+担当CH費用。実質利益=CL営業利益−HY費用。</p>
+</div>
+  <div class="rp-footer"><div class="fp-bar"></div><span class="fc" id="fc10">—</span><span>© 株式会社飛躍</span></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+(function(){
+  let d=null;
+  try{const p=new URLSearchParams(location.search).get('d');if(p)d=JSON.parse(decodeURIComponent(p));}catch(e){}
+  if(!d){try{d=JSON.parse(localStorage.getItem('hiyakuSimData'));}catch(e){}}
+  if(!d){document.body.innerHTML='<div style="padding:40px;font-size:18px;font-family:sans-serif">データがありません。シミュレーター画面からレポートを生成してください。</div>';return;}
+  const{months,totalRev36,totalGross,totalClOp,totalHyCost,totalHyFee,ltv,hyRoi,new1,new36,goalRev,goalMonth,hyInitial=0,hyMonthly=0,hyFeeRate=0,totalChInit=0,totalChMonthly=0,baseline={}}=d;
+  const{bTotalRev=0,bTotalGross=0,bTotalClOp=0,bLastNewCount=0,bMonthlyRevArr=[]}=baseline;
+  const fY=n=>{const a=Math.abs(n);if(a>=1000000)return(n<0?'-':'')+'¥'+(a/1000000).toFixed(1)+'M';if(a>=10000)return(n<0?'-':'')+'¥'+(a/10000).toFixed(1)+'万';return(n<0?'-':'')+'¥'+a.toLocaleString();};
+  const fD=v=>(v>=0?'+':'')+fY(v);
+  const pc=(b,w)=>b>0?(w-b>=0?'+':'')+Math.round((w-b)/b*100)+'%':'—';
+  const gc=v=>v>0?'var(--green-d)':v<0?'#C0392B':'inherit';
+  const s=(id,v,c)=>{const el=document.getElementById(id);if(!el)return;el.textContent=v;if(c)el.style.color=c;};
+  const yr=(a,b,fn)=>months.slice(a-1,b).reduce((t,x)=>t+fn(x),0);
+  const ml=months.map(x=>[1,6,12,18,24,30,36].includes(x.m)?'M'+x.m:'');
+  const cn=d.clientName||'○○株式会社';
+  const dt=new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'});
+  for(let i=1;i<=10;i++)s('fc'+i,cn+' 御中');
+  s('cv_client',cn);s('cv_date',dt);
+  const roi=totalHyCost>0?Math.round((totalGross-bTotalGross)/totalHyCost*100):null;
+  s('cv_rev',fD(totalRev36-bTotalRev));s('cv_gross',fD(totalGross-bTotalGross));
+  s('cv_roi',roi!=null?(roi>=0?'+':'')+roi+'%':'—');
+  s('p1_base_rev',fY(d.baseMonthlyRev||0));s('p1_goal_rev',fY(goalRev));s('p1_goal_month',goalMonth+'ヶ月目');s('p1_growth',(d.baseGrowth||0.8)+'%/月');
+  [1,2,3].forEach(i=>{s('cn'+i+'_p1',d['chName'+i]||'CH'+i);s('bt'+i,(d['baseT'+i]||'—')+'人/月');s('bc'+i,(d['baseC'+i]||'—')+'%');s('ba'+i,fY(d['baseA'+i]||0));s('bcost'+i,fY(d['baseCost'+i]||0));});
+  s('base_rev36',fY(bTotalRev));s('base_gross36',fY(bTotalGross));s('base_rev_m36',fY(bMonthlyRevArr[35]||0));s('base_new36',bLastNewCount+'人');
+  [['p1',1,12],['p2',13,24],['p3',25,36]].forEach(([ph,ms,me])=>{
+    [1,2,3].forEach(i=>{s('cn'+i+'_'+ph,d['chName'+i]||'CH'+i);s(ph+'t'+i+'s',d[ph+'_t'+i+'_s']||'—');s(ph+'t'+i+'e',d[ph+'_t'+i+'_e']||'—');s(ph+'c'+i+'s',(d[ph+'_c'+i+'_s']||'—')+'%');s(ph+'c'+i+'e',(d[ph+'_c'+i+'_e']||'—')+'%');s(ph+'a'+i+'s',fY(d[ph+'_a'+i+'_s']||0));s(ph+'a'+i+'e',fY(d[ph+'_a'+i+'_e']||0));});
+    s(ph+'crm_ctr',(d[ph+'_crm_ctr']||'—')+'%');s(ph+'crm_aov',fY(d[ph+'_crm_aov']||0));
+    const lm=months[me-1];s(ph+'rev_t',fY(yr(ms,me,x=>x.revenue)),'var(--green-d)');s(ph+'gross_t',fY(yr(ms,me,x=>x.gross)));s(ph+'rev_l',fY(lm?.revenue||0));s(ph+'new_l',(lm?.newCount||0)+'人');
+  });
+  s('rp_f2',(d.f2||'—')+'%');s('rp_f3',(d.f3||'—')+'%');s('rp_cycle',(d.cycle||'—')+'日');s('rp_repeat',(d.repeat||'—')+'%');
+  s('rp_cogs',(d.cogs||'—')+'%');s('rp_sale_disc',(d.saleDisc||'—')+'%');s('rp_sale_count',(d.saleCount||'—')+'回/年');
+  s('rp_cl_fixed',fY(d.clFixed||0)+'/月');s('rp_cl_var',(d.clVar||'—')+'%');
+  s('rp_hy_init',fY(hyInitial+totalChInit));s('rp_hy_monthly',fY((hyMonthly+totalChMonthly)*36));s('rp_hy_fee',fY(totalHyFee));s('rp_hy_total',fY(totalHyCost));
+  const rd=totalRev36-bTotalRev,gd2=totalGross-bTotalGross;
+  s('imp_rev_diff',fD(rd),gc(rd));s('imp_rev_b',fY(bTotalRev));s('imp_rev_w',fY(totalRev36));s('imp_rev_pct',pc(bTotalRev,totalRev36));
+  s('imp_gross_diff',fD(gd2),gc(gd2));s('imp_gross_b',fY(bTotalGross));s('imp_gross_w',fY(totalGross));s('imp_gross_pct',pc(bTotalGross,totalGross));
+  s('imp_roi',roi!=null?(roi>=0?'+':'')+roi+'%':'—',gc(roi||0));s('imp_hycost','HIYAKU合計 '+fY(totalHyCost));
+  [[1,'y1',1,12],[2,'y2',13,24],[3,'y3',25,36]].forEach(([n,id,ms,me])=>{const r=yr(ms,me,x=>x.revenue),g=yr(ms,me,x=>x.gross),o=yr(ms,me,x=>x.clOpProfit),rl=yr(ms,me,x=>x.realOpProfit);s(id+'_rev',fY(r));s(id+'_sub','粗利 '+fY(g)+'  CL営業利益 '+fY(o)+'  実質利益 '+fY(rl));});
+  s('cmp_rev_b',fY(bTotalRev));s('cmp_rev_w',fY(totalRev36));s('cmp_rev_d',fD(rd),gc(rd));s('cmp_rev_p',pc(bTotalRev,totalRev36));
+  s('cmp_gross_b',fY(bTotalGross));s('cmp_gross_w',fY(totalGross));s('cmp_gross_d',fD(gd2),gc(gd2));s('cmp_gross_p',pc(bTotalGross,totalGross));
+  s('cmp_op_b',fY(bTotalClOp));s('cmp_op_w',fY(totalClOp));s('cmp_op_d',fD(totalClOp-bTotalClOp),gc(totalClOp-bTotalClOp));
+  s('cmp_roi',roi!=null?(roi>=0?'+':'')+roi+'%':'—',gc(roi||0));
+  s('cmp_cust_b',bLastNewCount+'人');s('cmp_cust_w',new36+'人');s('cmp_cust_d','+'+(new36-bLastNewCount)+'人','var(--green-d)');s('cmp_cust_p',pc(bLastNewCount,new36));
+  const tbody=document.getElementById('rp_tbl');
+  if(tbody)tbody.innerHTML=months.map(x=>`<tr style="background:${x.m%2?'#fff':'#F9F9F7'}"><td style="text-align:center">${'M'+x.m}${x.isSale?'<span style="background:var(--green);color:#fff;font-size:6pt;padding:0 2px;margin-left:2px">S</span>':''}</td><td>${x.newCount}</td><td style="color:var(--green-d);font-weight:600">${fY(x.revenue)}</td><td>${fY(x.gross)}</td><td>${fY(x.adCost||0)}</td><td>${fY(x.clOpProfit)}</td><td>${fY(x.hyCost)}</td><td style="color:${x.realOpProfit>=0?'var(--green-d)':'#C0392B'}">${fY(x.realOpProfit)}</td></tr>`).join('');
+  const opt={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:n=>'¥'+Math.round(n/10000)+'万',font:{size:8}},grid:{color:'rgba(0,0,0,0.05)'}},x:{ticks:{font:{size:7}},grid:{display:false}}}};
+  const mk=(id,cfg)=>{const el=document.getElementById(id);if(el)new Chart(el,cfg);};
+  const lo={display:true,position:'bottom',labels:{font:{size:8},boxWidth:10,padding:8}};
+  mk('rcBaseline',{type:'line',data:{labels:ml,datasets:[{label:'飛躍なし',data:bMonthlyRevArr,borderColor:'#888884',backgroundColor:'rgba(136,136,132,0.08)',borderWidth:1.5,pointRadius:0,fill:true,tension:0.3,borderDash:[4,3]}]},options:opt});
+  mk('rcImpact',{type:'line',data:{labels:ml,datasets:[{label:'飛躍なし',data:bMonthlyRevArr,borderColor:'#888884',backgroundColor:'rgba(136,136,132,0.06)',borderWidth:1.5,pointRadius:0,fill:true,tension:0.3,borderDash:[4,3]},{label:'飛躍あり',data:months.map(x=>Math.round(x.revenue)),borderColor:'#2C913C',backgroundColor:'rgba(44,145,60,0.1)',borderWidth:2,pointRadius:0,fill:true,tension:0.3}]},options:{...opt,plugins:{legend:lo}}});
+  mk('rcAnnual',{type:'bar',data:{labels:['Year 1（成長期）','Year 2（安定期）','Year 3（拡大期）'],datasets:[{label:'年間売上',data:[yr(1,12,x=>x.revenue),yr(13,24,x=>x.revenue),yr(25,36,x=>x.revenue)],backgroundColor:'#2C913C'},{label:'粗利',data:[yr(1,12,x=>x.gross),yr(13,24,x=>x.gross),yr(25,36,x=>x.gross)],backgroundColor:'rgba(44,145,60,0.4)'},{label:'実質利益',data:[yr(1,12,x=>x.realOpProfit),yr(13,24,x=>x.realOpProfit),yr(25,36,x=>x.realOpProfit)],backgroundColor:'rgba(220,100,80,0.6)'}]},options:{...opt,plugins:{legend:lo},scales:{y:{ticks:{callback:n=>'¥'+Math.round(n/10000)+'万',font:{size:8}}},x:{ticks:{font:{size:8}}}}}});
+  mk('rcRevenue',{type:'line',data:{labels:ml,datasets:[{label:'月商',data:months.map(x=>x.revenue),borderColor:'#2C913C',backgroundColor:'rgba(44,145,60,0.1)',borderWidth:2,pointRadius:0,fill:true,tension:0.3},{label:'粗利',data:months.map(x=>x.gross),borderColor:'rgba(44,145,60,0.6)',borderWidth:1.5,pointRadius:0,tension:0.3},{label:'実質利益',data:months.map(x=>x.realOpProfit),borderColor:'rgba(220,100,80,0.8)',borderWidth:1.5,pointRadius:0,tension:0.3}]},options:{...opt,plugins:{legend:lo}}});
+  mk('rcCohort',{type:'bar',data:{labels:ml,datasets:[{label:'新規',data:months.map(x=>x.newCount),backgroundColor:'#2C913C'},{label:'F2/F3',data:months.map(x=>x.f2f3Count||0),backgroundColor:'#1E6B2C'},{label:'月次RP',data:months.map(x=>x.rpCount||0),backgroundColor:'#888884'}]},options:{...opt,scales:{x:{stacked:true,ticks:{font:{size:7}}},y:{stacked:true,ticks:{font:{size:8}}}},plugins:{legend:lo}}});
+  mk('rcCost',{type:'bar',data:{labels:ml,datasets:[{label:'広告費',data:months.map(x=>x.adCost||0),backgroundColor:'#2C913C'},{label:'CL販管費',data:months.map(x=>x.clOpex||0),backgroundColor:'#888884'},{label:'HY費用',data:months.map(x=>x.hyCost),backgroundColor:'#CACAC6'}]},options:{...opt,scales:{x:{stacked:true,ticks:{font:{size:7}}},y:{stacked:true,ticks:{callback:n=>'¥'+Math.round(n/10000)+'万',font:{size:8}}}},plugins:{legend:lo}}});
+})();
+</script>
+</body>
+</html>
